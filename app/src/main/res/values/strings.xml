@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Travelendar</string>
+
+    <!--Tab 1 - UpComing trips-->
+    <string name="title_tab_one_upcoming_trip">UpComing</string>
+
+    <!--Tab 2 - UpComing trips-->
+    <string name="title_tab_two_conclued_trip">Concluded</string>
+
+
 </resources>
