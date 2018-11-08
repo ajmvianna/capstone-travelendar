@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    tools:context="edu.nanodegreeprojects.capstone.travelendar.fragments.TabThreeAddTrip">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -20,7 +21,13 @@
                 android:id="@+id/tv_trip_to_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/trip_to_label"/>
+                android:hint="@string/trip_to_label" />
+
+            <EditText
+                android:id="@+id/et_trip_to_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/trip_to_hint" />
 
             <TextView
                 android:id="@+id/tv_trip_from_label"
@@ -28,19 +35,38 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/trip_from_label" />
 
+            <EditText
+                android:id="@+id/et_trip_from_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/trip_from_hint" />
+
             <TextView
                 android:id="@+id/tv_trip_initial_date_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/trip_initial_date_label" />
 
+            <EditText
+                android:id="@+id/et_trip_initial_date_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/trip_initial_date_hint" />
+
             <TextView
                 android:id="@+id/tv_trip_end_date_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/trip_end_date_label" />
+
+            <EditText
+                android:id="@+id/et_trip_end_date_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/trip_end_date_hint" />
+
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
 
-</LinearLayout>
+</RelativeLayout>

@@ -7,7 +7,7 @@ public class Trip implements Serializable {
     private String to;
     private String from;
     private String initialDate;
-    private String EndDate;
+    private String endDate;
     private int rate;
     private float budget;
     private String generalNotes;
@@ -17,7 +17,7 @@ public class Trip implements Serializable {
         this.to = to;
         this.from = from;
         this.initialDate = initialDate;
-        EndDate = endDate;
+        this.endDate = endDate;
         this.rate = rate;
         this.budget = budget;
         this.generalNotes = generalNotes;
@@ -54,11 +54,11 @@ public class Trip implements Serializable {
     }
 
     public String getEndDate() {
-        return EndDate;
+        return endDate;
     }
 
     public void setEndDate(String endDate) {
-        EndDate = endDate;
+        this.endDate = endDate;
     }
 
     public int getRate() {

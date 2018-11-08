@@ -5,9 +5,11 @@
     android:layout_height="match_parent"
     tools:context="edu.nanodegreeprojects.capstone.travelendar.fragments.TabTwoConcludedTrip">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_tab_two_conclued_trip" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_tab_two"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp" />
+
 
 </RelativeLayout>

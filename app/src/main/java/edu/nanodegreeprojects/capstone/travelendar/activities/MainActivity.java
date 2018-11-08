@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
 
     TabLayout tabLayout;
     RecyclerView recyclerViewTabOne;
+    RecyclerView recyclerViewTabTwo;
+    GridLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +34,10 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
     }
 
     private void loadComponents() {
-        loadTabs();
-        loadContentTabs();
-
+        loadMainTabs();
     }
 
-    private void loadTabs() {
+    private void loadMainTabs() {
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.title_tab_one_upcoming_trip)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.title_tab_two_conclued_trip)));
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                loadContentTabs(tab.getPosition());
             }
 
             @Override
@@ -62,19 +64,48 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
 
             }
         });
+
     }
 
-    private void loadContentTabs() {
-        recyclerViewTabOne = findViewById(R.id.recycler_view_tab_one);
+    private void loadContentTabs(int tab) {
         List<Trip> list = new ArrayList<>();
         Trip trip = new Trip();
-        for(int i = 0; i < 10; i++)
-            list.add(trip);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
-        recyclerViewTabOne.setLayoutManager(layoutManager);
-
+        layoutManager = new GridLayoutManager(this, 1);
         TripAdapter tripAdapter = new TripAdapter(this);
-        recyclerViewTabOne.setAdapter(tripAdapter);
+        switch (tab) {
+            case 0:
+                recyclerViewTabOne = findViewById(R.id.recycler_view_tab_one);
+                for (int i = 0; i < 10; i++)
+                    list.add(trip);
+                recyclerViewTabOne.setLayoutManager(layoutManager);
+                tripAdapter.setTripData(list);
+                recyclerViewTabOne.setAdapter(tripAdapter);
+                break;
+            case 1:
+                for (int i = 0; i < 5; i++)
+                    list.add(trip);
+                recyclerViewTabTwo = findViewById(R.id.recycler_view_tab_two);
+                recyclerViewTabTwo.setLayoutManager(layoutManager);
+                tripAdapter.setTripData(list);
+                recyclerViewTabTwo.setAdapter(tripAdapter);
+                break;
+        }
+
+    }
+
+    private void loadOtherTabs(int tab) {
+        tabLayout = findViewById(R.id.tab_layout);
+        tabLayout.removeAllTabs();
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.title_tab_three_add_trip)));
+
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+
+        final ViewPager viewPager = findViewById(R.id.view_pager);
+        final PageAdapter adapter = new PageAdapter(getSupportFragmentManager(), 1);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(0);
+
     }
 
     @Override
@@ -90,5 +121,6 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
     @Override
     public void onClick(Trip trip) {
 
+        loadOtherTabs(2);
     }
 }
