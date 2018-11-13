@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="edu.nanodegreeprojects.capstone.travelendar.activities.DetailTripActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/main_toolbar_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/theme_primary_dark"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/theme_primary_dark"
+            android:text="@string/app_name"
+            android:textSize="24sp" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@color/theme_primary"
+            android:elevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_trip_to_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_to_label" />
+
+                <EditText
+                    android:id="@+id/et_trip_to"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_to_hint" />
+
+                <TextView
+                    android:id="@+id/tv_trip_from_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_from_label" />
+
+                <EditText
+                    android:id="@+id/et_trip_from"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_from_hint" />
+
+                <TextView
+                    android:id="@+id/tv_trip_initial_date_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_initial_date_label" />
+
+                <EditText
+                    android:id="@+id/et_trip_initial_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_initial_date_hint"
+                    android:inputType="date" />
+
+                <TextView
+                    android:id="@+id/tv_trip_end_date_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_end_date_label" />
+
+                <EditText
+                    android:id="@+id/et_trip_end_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_end_date_hint"
+                    android:inputType="date" />
+
+                <TextView
+                    android:id="@+id/tv_trip_rate_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_rate_label" />
+
+                <EditText
+                    android:id="@+id/et_trip_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_rate_hint"
+                    android:inputType="number" />
+
+                <TextView
+                    android:id="@+id/tv_trip_budget_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_budget_label" />
+
+                <EditText
+                    android:id="@+id/et_trip_budget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_budget_hint"
+                    android:inputType="numberDecimal" />
+
+                <TextView
+                    android:id="@+id/tv_trip_general_notes_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_general_notes_label" />
+
+                <EditText
+                    android:id="@+id/et_trip_general_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_general_notes_hint"
+                    android:inputType="text" />
+
+                <TextView
+                    android:id="@+id/tv_trip_status_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_status_label" />
+
+                <EditText
+                    android:id="@+id/et_trip_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/trip_status_hint"
+                    android:inputType="text" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_back"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom|start"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:background="@color/theme_primary_dark"
+            android:elevation="@dimen/fab_elevation"
+            android:foregroundGravity="center"
+            android:src="@drawable/ic_arrow_back_black_24dp" />
+
+
+    </LinearLayout>
+</ScrollView>

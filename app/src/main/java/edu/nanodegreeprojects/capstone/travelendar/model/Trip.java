@@ -4,8 +4,9 @@ import java.io.Serializable;
 
 public class Trip implements Serializable {
 
-    private String to;
-    private String from;
+    private int id;
+    private String toWhere;
+    private String fromWhere;
     private String initialDate;
     private String endDate;
     private int rate;
@@ -13,9 +14,23 @@ public class Trip implements Serializable {
     private String generalNotes;
     private String status;
 
-    public Trip(String to, String from, String initialDate, String endDate, int rate, float budget, String generalNotes, String status) {
-        this.to = to;
-        this.from = from;
+
+    public Trip()
+    {
+
+        this.toWhere = "to";
+        this.fromWhere = "from";
+        this.initialDate = "initialDate";
+        this.endDate = "endDate";
+        this.rate = 1;
+        this.budget = 4500;
+        this.generalNotes = "generalNotes";
+        this.status = "status";
+    }
+    public Trip(int id, String toWhere, String fromWhere, String initialDate, String endDate, int rate, float budget, String generalNotes, String status) {
+        this.id = id;
+        this.toWhere = toWhere;
+        this.fromWhere = fromWhere;
         this.initialDate = initialDate;
         this.endDate = endDate;
         this.rate = rate;
@@ -24,25 +39,28 @@ public class Trip implements Serializable {
         this.status = status;
     }
 
-    public Trip()
-    {
-        this.to = "Teste";
+    public int getId() {
+        return id;
     }
 
-    public String getTo() {
-        return to;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public String getToWhere() {
+        return toWhere;
     }
 
-    public String getFrom() {
-        return from;
+    public void setToWhere(String to) {
+        this.toWhere = to;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public String getFromWhere() {
+        return fromWhere;
+    }
+
+    public void setFromWhere(String fromWhere) {
+        this.fromWhere = fromWhere;
     }
 
     public String getInitialDate() {

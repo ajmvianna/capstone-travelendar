@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="travelendar.capstone.nanodegreeprojects.edu.travelendar">
+    package="edu.nanodegreeprojects.capstone.travelendar">
 
     <application
         android:allowBackup="true"
@@ -16,6 +16,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="edu.nanodegreeprojects.capstone.travelendar.activities.AddTripActivity" />
+        <activity android:name="edu.nanodegreeprojects.capstone.travelendar.activities.DetailTripActivity"/>
+
+        <provider
+            android:name="edu.nanodegreeprojects.capstone.travelendar.data.ContentProviderTrips"
+            android:authorities="edu.nanodegreeprojects.capstone.travelendar"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            android:label="TripsProvider"
+            android:readPermission="edu.nanodegreeprojects.capstone.travelendar.READ"
+            android:writePermission="edu.nanodegreeprojects.capstone.travelendar.WRITE"
+
+            />
+
     </application>
 
 </manifest>

@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import edu.nanodegreeprojects.capstone.travelendar.fragments.TabOneUpComingTrip;
-import edu.nanodegreeprojects.capstone.travelendar.fragments.TabThreeAddTrip;
 import edu.nanodegreeprojects.capstone.travelendar.fragments.TabTwoConcludedTrip;
 
 public class PageAdapter extends FragmentStatePagerAdapter {
@@ -25,8 +24,6 @@ public class PageAdapter extends FragmentStatePagerAdapter {
                 return new TabOneUpComingTrip();
             case 1:
                 return new TabTwoConcludedTrip();
-            case 2:
-                return new TabThreeAddTrip();
             default:
                 return null;
         }

@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.nanodegreeprojects.capstone.travelendar.R;
 import edu.nanodegreeprojects.capstone.travelendar.model.Trip;
-import travelendar.capstone.nanodegreeprojects.edu.travelendar.R;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripAdapterViewHolder> {
 
@@ -77,7 +77,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripAdapterVie
 //            } catch (JSONException e) {
 //                e.printStackTrace();
 //            }
-//            MovieDbHelper.insertMovieList(movieList, contentResolver);
+//            TripDbHelper.insertMovieList(movieList, contentResolver);
 //
 //            this.movieList = movieList;
 //        } else {
