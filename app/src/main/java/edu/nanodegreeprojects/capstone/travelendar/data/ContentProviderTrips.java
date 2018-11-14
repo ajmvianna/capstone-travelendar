@@ -30,27 +30,28 @@ public class ContentProviderTrips extends ContentProvider {
         SQLiteDatabase db = tDh.getReadableDatabase();
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
         builder.setTables(TripContract.TripContractEntry.TABLE_NAME);
+        String idStr = uri.getLastPathSegment();
         switch (URI_MATCHER.match(uri)) {
 
-            case ContentProviderContract.TRIPS_CODE:
+            case ContentProviderContract.ALL_TRIPS_CODE:
                 break;
 
             case ContentProviderContract.TRIP_ITEM_CODE:
                 builder.appendWhere(TripContract.TripContractEntry.COLUMN_ID +
                         "=" +
-                        uri.getLastPathSegment());
+                        idStr);
                 break;
 
             case ContentProviderContract.CONCLUDED_TRIPS:
                 builder.appendWhere(TripContract.TripContractEntry.COLUMN_STATUS +
-                        "=" +
-                        uri.getLastPathSegment());
+                        "='" +
+                        idStr + "'");
                 break;
 
             case ContentProviderContract.UPCOMING_TRIPS:
                 builder.appendWhere(TripContract.TripContractEntry.COLUMN_STATUS +
-                        "=" +
-                        uri.getLastPathSegment());
+                        "='" +
+                        idStr + "'");
                 break;
             default:
                 throw new IllegalArgumentException(
@@ -71,7 +72,7 @@ public class ContentProviderTrips extends ContentProvider {
         SQLiteDatabase db = tDh.getWritableDatabase();
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
         switch (URI_MATCHER.match(uri)) {
-            case ContentProviderContract.TRIP_ITEM_CODE:
+            case ContentProviderContract.TRIP:
                 builder.setTables(TripContract.TripContractEntry.TABLE_NAME);
                 long id =
                         db.insert(
@@ -90,10 +91,11 @@ public class ContentProviderTrips extends ContentProvider {
 
         SQLiteDatabase db = tDh.getWritableDatabase();
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+        String idStr = uri.getLastPathSegment();
         switch (URI_MATCHER.match(uri)) {
             case ContentProviderContract.TRIP_ITEM_CODE:
                 builder.setTables(TripContract.TripContractEntry.TABLE_NAME);
-                return db.delete(TripContract.TripContractEntry.TABLE_NAME, s, strings);
+                return db.delete(TripContract.TripContractEntry.TABLE_NAME, TripContract.TripContractEntry.COLUMN_ID + "=?", new String[]{idStr});
             default:
                 throw new IllegalArgumentException(
                         "Unsupported URI: " + uri);
@@ -105,33 +107,47 @@ public class ContentProviderTrips extends ContentProvider {
     public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String
             s, @Nullable String[] strings) {
 
+
         SQLiteDatabase db = tDh.getWritableDatabase();
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+        builder.setTables(TripContract.TripContractEntry.TABLE_NAME);
         String idStr = uri.getLastPathSegment();
         int res = 0;
         switch (URI_MATCHER.match(uri)) {
-            case ContentProviderContract.TRIP_ITEM_CODE:
-                builder.setTables(TripContract.TripContractEntry.TABLE_NAME);
-                builder.appendWhere(TripContract.TripContractEntry.COLUMN_ID +
+            case ContentProviderContract.ALL_TRIPS_CODE:
+                break;
+            case ContentProviderContract.CONCLUDED_TRIPS:
+                builder.appendWhere(TripContract.TripContractEntry.COLUMN_STATUS +
+                        "=" +
+                        idStr);
+                break;
+            case ContentProviderContract.UPCOMING_TRIPS:
+                builder.appendWhere(TripContract.TripContractEntry.COLUMN_STATUS +
                         "=" +
                         idStr);
 
-                String where = TripContract.TripContractEntry.COLUMN_ID + " = " + idStr;
-
-                res = db.update(
-                        TripContract.TripContractEntry.TABLE_NAME,
-                        contentValues,
-                        where,
-                        strings);
                 break;
+            case ContentProviderContract.TRIP:
+                builder.appendWhere(TripContract.TripContractEntry.COLUMN_ID +
+                        "=" +
+                        idStr);
+                break;
+
         }
+        res = db.update(
+                TripContract.TripContractEntry.TABLE_NAME,
+                contentValues,
+                s,
+                strings);
         return res;
     }
 
     static {
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-        URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_ALL_TRIPS, ContentProviderContract.TRIPS_CODE);
-        URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_TRIP_ITEM + "/#", ContentProviderContract.TRIP_ITEM_CODE);
+
+        URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_TRIP, ContentProviderContract.TRIP);
+        URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_TRIP.concat("/#"), ContentProviderContract.TRIP_ITEM_CODE);
+        URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_ALL_TRIPS, ContentProviderContract.ALL_TRIPS_CODE);
         URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_CONCLUDED_TRIP, ContentProviderContract.CONCLUDED_TRIPS);
         URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_UPCOMING_TRIP, ContentProviderContract.UPCOMING_TRIPS);
     }

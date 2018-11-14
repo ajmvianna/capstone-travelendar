@@ -16,6 +16,8 @@ import java.util.List;
 import edu.nanodegreeprojects.capstone.travelendar.R;
 import edu.nanodegreeprojects.capstone.travelendar.adapters.PageAdapter;
 import edu.nanodegreeprojects.capstone.travelendar.adapters.TripAdapter;
+import edu.nanodegreeprojects.capstone.travelendar.data.ContentProviderContract;
+import edu.nanodegreeprojects.capstone.travelendar.data.TripContract;
 import edu.nanodegreeprojects.capstone.travelendar.data.TripDbHelper;
 import edu.nanodegreeprojects.capstone.travelendar.fragments.TabOneUpComingTrip;
 import edu.nanodegreeprojects.capstone.travelendar.fragments.TabTwoConcludedTrip;
@@ -76,9 +78,14 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
         TripDbHelper tripDbHelper = new TripDbHelper(this);
         tripDbHelper.insertTrip(trip);
 
-        trip.setToWhere("bla");
-        tripDbHelper.updateTrip(trip);
-        tripDbHelper.deleteTrip(trip);
+        tripDbHelper.getTripList(ContentProviderContract.PATH_ALL_TRIPS, null);
+        tripDbHelper.getTripList(ContentProviderContract.PATH_CONCLUDED_TRIP, null);
+        tripDbHelper.getTripList(ContentProviderContract.PATH_UPCOMING_TRIP, null);
+        tripDbHelper.getTripList(ContentProviderContract.PATH_TRIP, trip);
+
+//        trip.setToWhere("bla");
+//        tripDbHelper.updateTrip(trip);
+//        tripDbHelper.deleteTrip(trip);
 
 
         List<Trip> list = new ArrayList<>();

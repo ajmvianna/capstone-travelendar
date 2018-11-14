@@ -17,7 +17,7 @@ public class Trip implements Serializable {
 
     public Trip()
     {
-
+        this.id = 7;
         this.toWhere = "to";
         this.fromWhere = "from";
         this.initialDate = "initialDate";
@@ -25,7 +25,7 @@ public class Trip implements Serializable {
         this.rate = 1;
         this.budget = 4500;
         this.generalNotes = "generalNotes";
-        this.status = "status";
+        this.status = "upcoming";
     }
     public Trip(int id, String toWhere, String fromWhere, String initialDate, String endDate, int rate, float budget, String generalNotes, String status) {
         this.id = id;
