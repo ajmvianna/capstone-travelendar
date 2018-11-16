@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,23 +67,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripAdapterVie
         if (tripList.isEmpty()) return 0;
         return tripList.size();
     }
-
-//    public void setTripData(String tripData, ContentResolver contentResolver) {
-//        List<Trip> movieList = new ArrayList<>();
-//        if (!TripData.equals("")) {
-//            try {
-//                tripList = JsonParser.convertHTTPReturnToMovie(movieData);
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//            TripDbHelper.insertMovieList(movieList, contentResolver);
-//
-//            this.movieList = movieList;
-//        } else {
-//            this.movieList.clear();
-//        }
-//        notifyDataSetChanged();
-//    }
 
     public void setTripData(List<Trip> tripList) {
         if (tripList != null && tripList.size() > 0) {

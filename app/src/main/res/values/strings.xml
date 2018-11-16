@@ -1,19 +1,27 @@
 <resources>
     <string name="app_name">Travelendar</string>
 
+    <!--Main Activity-->
+
+    <string name="error_loading_trips_message">Erro ao carregar viagens!</string>
+
     <!--Tab 0 - UpComing trips-->
     <string name="title_tab_one_upcoming_trip">Próximas</string>
 
     <!--Tab 1 - Concluded trips-->
     <string name="title_tab_two_conclued_trip">Concluídas</string>
 
-    <!--Tab 2 - Add trip-->
+    <!-- Add trip-->
     <string name="title_tab_three_add_trip">Adicionar nova viagem</string>
+    <string name="bt_add_trip">Adicionar</string>
+    <string name="add_trip_successful">Viagem adicionada!</string>
+    <string name="add_trip_error">Erro ao adicionar viagem!</string>
+    <string name="fill_all_fields_message">Por favor, preencher todos os campos!</string>
 
     <!--Trip item information-->
     <!--Trip hints-->
-    <string name="trip_to_hint">Ex.: Miami</string>
-    <string name="trip_from_hint">Ex.: Manaus</string>
+    <string name="trip_to_where_hint">Ex.: Miami</string>
+    <string name="trip_from_where_hint">Ex.: Manaus</string>
     <string name="trip_initial_date_hint">Ex.: 01/01/2019</string>
     <string name="trip_end_date_hint">Ex.: 01/02/2019</string>
     <string name="trip_rate_hint">Ex.: 5 Stars</string>
@@ -22,8 +30,8 @@
     <string name="trip_status_hint">Ex.: Concluded</string>
 
     <!--Trip Labels-->
-    <string name="trip_to_label">Para:</string>
-    <string name="trip_from_label">De:</string>
+    <string name="trip_to_where_label">Para:</string>
+    <string name="trip_from_where_label">De:</string>
     <string name="trip_initial_date_label">Data Inicial:</string>
     <string name="trip_end_date_label">Data Final:</string>
     <string name="trip_rate_label">Nota:</string>

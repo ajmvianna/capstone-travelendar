@@ -27,6 +27,17 @@ public class Trip implements Serializable {
         this.generalNotes = "generalNotes";
         this.status = "upcoming";
     }
+    public Trip(String toWhere, String fromWhere, String initialDate, String endDate, int rate, float budget, String generalNotes, String status) {
+        this.toWhere = toWhere;
+        this.fromWhere = fromWhere;
+        this.initialDate = initialDate;
+        this.endDate = endDate;
+        this.rate = rate;
+        this.budget = budget;
+        this.generalNotes = generalNotes;
+        this.status = status;
+    }
+
     public Trip(int id, String toWhere, String fromWhere, String initialDate, String endDate, int rate, float budget, String generalNotes, String status) {
         this.id = id;
         this.toWhere = toWhere;

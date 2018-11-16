@@ -17,16 +17,16 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_trip_to_label"
+                android:id="@+id/tv_trip_to_where_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/trip_to_label"/>
+                android:hint="@string/trip_to_where_label"/>
 
             <TextView
-                android:id="@+id/tv_trip_from_label"
+                android:id="@+id/tv_trip_from_where_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/trip_from_label" />
+                android:hint="@string/trip_from_where_label" />
 
             <TextView
                 android:id="@+id/tv_trip_initial_date_label"

@@ -43,28 +43,28 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_trip_to_label"
+                    android:id="@+id/tv_trip_to_where_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/trip_to_label" />
+                    android:hint="@string/trip_to_where_label" />
 
                 <EditText
-                    android:id="@+id/et_trip_to"
+                    android:id="@+id/et_trip_to_where"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/trip_to_hint" />
+                    android:hint="@string/trip_to_where_hint" />
 
                 <TextView
-                    android:id="@+id/tv_trip_from_label"
+                    android:id="@+id/tv_trip_from_where_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/trip_from_label" />
+                    android:hint="@string/trip_from_where_label" />
 
                 <EditText
-                    android:id="@+id/et_trip_from"
+                    android:id="@+id/et_trip_from_where"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/trip_from_hint" />
+                    android:hint="@string/trip_from_where_hint" />
 
                 <TextView
                     android:id="@+id/tv_trip_initial_date_label"
@@ -129,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/trip_general_notes_hint"
-                    android:inputType="text" />
+                    android:inputType="text|textMultiLine" />
 
                 <TextView
                     android:id="@+id/tv_trip_status_label"
