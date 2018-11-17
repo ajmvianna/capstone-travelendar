@@ -53,6 +53,11 @@ public class ContentProviderTrips extends ContentProvider {
                         "='" +
                         idStr + "'");
                 break;
+            case ContentProviderContract.MOST_UPCOMING_TRIP:
+                builder.appendWhere(TripContract.TripContractEntry.COLUMN_STATUS +
+                        "='" +
+                        ContentProviderContract.PATH_UPCOMING_TRIPS + "'");
+                break;
             default:
                 throw new IllegalArgumentException(
                         "Unsupported URI: " + uri);
@@ -148,8 +153,9 @@ public class ContentProviderTrips extends ContentProvider {
         URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_TRIP, ContentProviderContract.TRIP);
         URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_TRIP.concat("/#"), ContentProviderContract.TRIP_ITEM_CODE);
         URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_ALL_TRIPS, ContentProviderContract.ALL_TRIPS_CODE);
-        URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_CONCLUDED_TRIP, ContentProviderContract.CONCLUDED_TRIPS);
-        URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_UPCOMING_TRIP, ContentProviderContract.UPCOMING_TRIPS);
+        URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_CONCLUDED_TRIPS, ContentProviderContract.CONCLUDED_TRIPS);
+        URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_UPCOMING_TRIPS, ContentProviderContract.UPCOMING_TRIPS);
+        URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_MOST_UPCOMING_TRIP, ContentProviderContract.MOST_UPCOMING_TRIP);
     }
 
     private Uri getUriForId(long id, Uri uri) {

@@ -18,6 +18,13 @@
     <string name="add_trip_error">Erro ao adicionar viagem!</string>
     <string name="fill_all_fields_message">Por favor, preencher todos os campos!</string>
 
+    <!--Trip Details-->
+    <string name="bt_end_trip">Finalizar Viagem</string>
+    <string name="end_trip_successful_message">Viagem concluída!</string>
+    <string name="end_trip_error_message">Erro ao concluir viagem!</string>
+    <string name="rate_trip_message_title">Avalie essa viagem!</string>
+    <string name="rate_trip_confirmation">Confirmar avaliação</string>
+
     <!--Trip item information-->
     <!--Trip hints-->
     <string name="trip_to_where_hint">Ex.: Miami</string>

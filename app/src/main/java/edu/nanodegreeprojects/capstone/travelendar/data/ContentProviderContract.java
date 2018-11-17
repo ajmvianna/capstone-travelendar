@@ -17,12 +17,14 @@ public class ContentProviderContract implements BaseColumns {
     public static final int CONCLUDED_TRIPS = 102;
     public static final int UPCOMING_TRIPS = 103;
     public static final int TRIP = 104;
+    public static final int MOST_UPCOMING_TRIP = 105;
 
     public static final String PATH_ALL_TRIPS = "all";
     public static final String PATH_TRIP = "trip";
     public static final String PATH_TRIP_ITEM = "#";
-    public static final String PATH_CONCLUDED_TRIP = "concluded";
-    public static final String PATH_UPCOMING_TRIP = "upcoming";
+    public static final String PATH_CONCLUDED_TRIPS = "concluded";
+    public static final String PATH_UPCOMING_TRIPS = "upcoming";
+    public static final String PATH_MOST_UPCOMING_TRIP = "most_upcoming";
 
     public static final Uri CONTENT_URI_TRIPS = BASE_CONTENT_URI.buildUpon().appendPath(PATH_ALL_TRIPS).build();
 

@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name="edu.nanodegreeprojects.capstone.travelendar.activities.AddTripActivity" />
-        <activity android:name="edu.nanodegreeprojects.capstone.travelendar.activities.DetailTripActivity"/>
+        <activity android:name="edu.nanodegreeprojects.capstone.travelendar.activities.DetailTripActivity" />
 
         <provider
             android:name="edu.nanodegreeprojects.capstone.travelendar.data.ContentProviderTrips"
@@ -26,9 +26,22 @@
             android:grantUriPermissions="true"
             android:label="TripsProvider"
             android:readPermission="edu.nanodegreeprojects.capstone.travelendar.READ"
-            android:writePermission="edu.nanodegreeprojects.capstone.travelendar.WRITE"
+            android:writePermission="edu.nanodegreeprojects.capstone.travelendar.WRITE" />
 
-            />
+        <receiver android:name=".widget.TripWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_ADDED" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/trip_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".widget.TripWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
     </application>
 

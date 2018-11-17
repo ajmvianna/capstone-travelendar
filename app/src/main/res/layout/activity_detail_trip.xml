@@ -144,6 +144,12 @@
                     android:hint="@string/trip_status_hint"
                     android:inputType="text" />
 
+                <Button
+                    android:id="@+id/bt_end_trip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bt_end_trip"/>
+
             </LinearLayout>
         </android.support.v7.widget.CardView>
 

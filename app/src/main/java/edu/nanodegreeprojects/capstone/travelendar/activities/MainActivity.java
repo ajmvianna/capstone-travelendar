@@ -120,8 +120,8 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
 
 //        tripDbHelper.insertTrip(trip);
 //        tripDbHelper.getTripList(ContentProviderContract.PATH_ALL_TRIPS, null);
-//        tripDbHelper.getTripList(ContentProviderContract.PATH_CONCLUDED_TRIP, null);
-//        tripDbHelper.getTripList(ContentProviderContract.PATH_UPCOMING_TRIP, null);
+//        tripDbHelper.getTripList(ContentProviderContract.PATH_CONCLUDED_TRIPS, null);
+//        tripDbHelper.getTripList(ContentProviderContract.PATH_UPCOMING_TRIPS, null);
 //        tripDbHelper.getTripList(ContentProviderContract.PATH_TRIP, trip);
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
     @Override
     public void onClick(Trip trip) {
 
-        Intent intent = new Intent(this, AddTripActivity.class);
+        Intent intent = new Intent(this, DetailTripActivity.class);
         intent.putExtra("trip", trip);
         startActivity(intent);
 
@@ -194,9 +194,9 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
 
                     switch (CURRENT_TAB_POSITION) {
                         case 0:
-                            return tripDbHelper.getTripList(ContentProviderContract.PATH_UPCOMING_TRIP, null);
+                            return tripDbHelper.getTripList(ContentProviderContract.PATH_UPCOMING_TRIPS, null);
                         case 1:
-                            return tripDbHelper.getTripList(ContentProviderContract.PATH_CONCLUDED_TRIP, null);
+                            return tripDbHelper.getTripList(ContentProviderContract.PATH_CONCLUDED_TRIPS, null);
                         default:
                             return null;
 

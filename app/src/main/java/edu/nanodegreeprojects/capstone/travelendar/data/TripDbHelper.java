@@ -86,14 +86,18 @@ public class TripDbHelper extends SQLiteOpenHelper {
             case ContentProviderContract.PATH_ALL_TRIPS:
                 resCursor = contentResolver.query(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_ALL_TRIPS).build(), null, null, null);
                 break;
-            case ContentProviderContract.PATH_CONCLUDED_TRIP:
-                resCursor = contentResolver.query(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_CONCLUDED_TRIP).build(), null, null, null);
+            case ContentProviderContract.PATH_CONCLUDED_TRIPS:
+                resCursor = contentResolver.query(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_CONCLUDED_TRIPS).build(), null, null, null);
                 break;
-            case ContentProviderContract.PATH_UPCOMING_TRIP:
-                resCursor = contentResolver.query(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_UPCOMING_TRIP).build(), null, null, null);
+            case ContentProviderContract.PATH_UPCOMING_TRIPS:
+                resCursor = contentResolver.query(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_UPCOMING_TRIPS).build(), null, null, null);
                 break;
             case ContentProviderContract.PATH_TRIP:
                 resCursor = contentResolver.query(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_TRIP).appendPath(String.valueOf(trip.getId())).build(), null, null, null);
+                break;
+            case ContentProviderContract.PATH_MOST_UPCOMING_TRIP:
+                //TODO FAZER QUERY RETORNAR SOMENTE A VIAGEM MAIS PROXIMA
+                resCursor = contentResolver.query(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_MOST_UPCOMING_TRIP).build(), null, null, null);
                 break;
         }
 
