@@ -9,7 +9,9 @@ import android.widget.ListView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import edu.nanodegreeprojects.capstone.travelendar.R;
 import edu.nanodegreeprojects.capstone.travelendar.data.ContentProviderContract;
+import edu.nanodegreeprojects.capstone.travelendar.data.TripContract;
 
 public class TripWidgetService extends RemoteViewsService {
 
@@ -65,21 +67,21 @@ public class TripWidgetService extends RemoteViewsService {
 
         @Override
         public RemoteViews getViewAt(int position) {
-//            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.row_listview_widget);
-//
-//            if (cursor != null && getCount() > 0) {
-//                Log.d("entrou no update", String.valueOf(getCount()));
-//                int indexIngredient = cursor.getColumnIndex(WidgetContract.IngredientEntry.INGREDIENT_NAME);
-//                cursor.moveToPosition(position);
-//
-//                String ingredient = cursor.getString(indexIngredient);
-//                remoteViews.setTextViewText(R.id.txt_ingredient_widget, ingredient);
-//            } else {
-//                Log.d("nao entrou no update", String.valueOf(getCount()));
-//                remoteViews.setTextViewText(R.id.txt_ingredient_widget, "No data");
-//            }
-            return null;
-            //return remoteViews;
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.trip_widget);
+
+            if (cursor != null && getCount() > 0) {
+                //Log.d("entrou no update", String.valueOf(getCount()));
+                int indexIngredient = cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE);
+                cursor.moveToPosition(position);
+
+                String ingredient = cursor.getString(indexIngredient);
+                remoteViews.setTextViewText(R.id.txt_ingredient_widget, ingredient);
+            } else {
+                Log.d("nao entrou no update", String.valueOf(getCount()));
+                remoteViews.setTextViewText(R.id.txt_ingredient_widget, "No data");
+            }
+            //return null;
+            return remoteViews;
         }
 
         @Override
