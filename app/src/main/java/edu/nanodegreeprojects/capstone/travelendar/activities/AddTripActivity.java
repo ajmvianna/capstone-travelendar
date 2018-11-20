@@ -43,9 +43,6 @@ public class AddTripActivity extends AppCompatActivity {
     @BindView(R.id.et_trip_general_notes)
     EditText edtGeneralNotes;
 
-    @BindView(R.id.et_trip_status)
-    EditText edtStatus;
-
     @BindString(R.string.add_trip_successful)
     String addTripSuccessfulMessage;
 
@@ -66,6 +63,7 @@ public class AddTripActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip);
         ButterKnife.bind(this);
+
     }
 
     @OnClick(R.id.fab_back)
@@ -99,6 +97,10 @@ public class AddTripActivity extends AppCompatActivity {
             }
         } else {
             Toast.makeText(this, fillAllFieldsMessage, Toast.LENGTH_SHORT).show();
+            if (placeTo == null)
+                edtToWhere.setText("");
+            if (placeFrom == null)
+                edtFromWhere.setText("");
         }
     }
 
@@ -109,19 +111,23 @@ public class AddTripActivity extends AppCompatActivity {
                 !edtEndDate.getText().toString().equals("") &&
                 !edtBudget.getText().toString().equals("") &&
                 !edtGeneralNotes.getText().toString().equals("") &&
-                !edtStatus.getText().toString().equals(""));
+                placeTo != null &&
+                placeFrom != null);
     }
 
-    private void getLocalScreen(int requestId) {
-
-        switch (requestId) {
-            case PLACE_PICKER_REQUEST_TO:
+    @OnClick({R.id.et_trip_to_where, R.id.et_trip_from_where})
+    public void getLocalScreen(View view) {
+        int requestId = -1;
+        switch (view.getId()) {
+            case R.id.et_trip_to_where:
                 placeTo = null;
                 edtToWhere.setText("");
+                requestId = PLACE_PICKER_REQUEST_TO;
                 break;
-            case PLACE_PICKER_REQUEST_FROM:
+            case R.id.et_trip_from_where:
                 placeFrom = null;
                 edtFromWhere.setText("");
+                requestId = PLACE_PICKER_REQUEST_FROM;
                 break;
         }
 
@@ -142,7 +148,8 @@ public class AddTripActivity extends AppCompatActivity {
                 Place place = PlacePicker.getPlace(this, data);
                 if (place != null) {
                     placeTo = new PlaceItem(place.getName().toString(),
-                            place.getLatLng(),
+                            place.getLatLng().latitude,
+                            place.getLatLng().longitude,
                             place.getAddress().toString());
                     edtToWhere.setText(placeTo.getPlaceName());
                 }
@@ -155,7 +162,8 @@ public class AddTripActivity extends AppCompatActivity {
                 Place place = PlacePicker.getPlace(this, data);
                 if (place != null) {
                     placeFrom = new PlaceItem(place.getName().toString(),
-                            place.getLatLng(),
+                            place.getLatLng().latitude,
+                            place.getLatLng().longitude,
                             place.getAddress().toString());
                     edtFromWhere.setText(placeFrom.getPlaceName());
                 }

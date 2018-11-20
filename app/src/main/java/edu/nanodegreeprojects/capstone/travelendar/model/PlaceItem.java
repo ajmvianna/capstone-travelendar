@@ -1,16 +1,18 @@
 package edu.nanodegreeprojects.capstone.travelendar.model;
 
-import com.google.android.gms.maps.model.LatLng;
+import java.io.Serializable;
 
-public class PlaceItem {
+public class PlaceItem implements Serializable{
 
     private String placeName;
-    private LatLng latLng;
+    private double latitude;
+    private double longitude;
     private String address;
 
-    public PlaceItem(String placeName, LatLng latLng, String address) {
+    public PlaceItem(String placeName, double latitude, double longitude, String address) {
         this.placeName = placeName;
-        this.latLng = latLng;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.address = address;
     }
 
@@ -22,12 +24,20 @@ public class PlaceItem {
         this.placeName = placeName;
     }
 
-    public LatLng getLatLng() {
-        return latLng;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLatLng(LatLng latLng) {
-        this.latLng = latLng;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getAddress() {

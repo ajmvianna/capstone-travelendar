@@ -52,7 +52,8 @@
                     android:id="@+id/et_trip_to_where"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/trip_to_where_hint" />
+                    android:hint="@string/trip_to_where_hint"
+                    android:inputType="text" />
 
                 <TextView
                     android:id="@+id/tv_trip_from_where_label"
@@ -64,7 +65,8 @@
                     android:id="@+id/et_trip_from_where"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/trip_from_where_hint" />
+                    android:hint="@string/trip_from_where_hint"
+                    android:inputType="text" />
 
                 <TextView
                     android:id="@+id/tv_trip_initial_date_label"
@@ -92,18 +94,18 @@
                     android:hint="@string/trip_end_date_hint"
                     android:inputType="date" />
 
-                <TextView
-                    android:id="@+id/tv_trip_rate_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/trip_rate_label" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_trip_rate_label"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="@string/trip_rate_label" />-->
 
-                <EditText
-                    android:id="@+id/et_trip_rate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/trip_rate_hint"
-                    android:inputType="number" />
+                <!--<EditText-->
+                    <!--android:id="@+id/et_trip_rate"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="@string/trip_rate_hint"-->
+                    <!--android:inputType="number" />-->
 
                 <TextView
                     android:id="@+id/tv_trip_budget_label"
@@ -131,24 +133,24 @@
                     android:hint="@string/trip_general_notes_hint"
                     android:inputType="text|textMultiLine" />
 
-                <TextView
-                    android:id="@+id/tv_trip_status_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/trip_status_label" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_trip_status_label"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="@string/trip_status_label" />-->
 
-                <EditText
-                    android:id="@+id/et_trip_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/trip_status_hint"
-                    android:inputType="text" />
+                <!--<EditText-->
+                    <!--android:id="@+id/et_trip_status"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="@string/trip_status_hint"-->
+                    <!--android:inputType="text" />-->
 
                 <Button
+                    android:id="@+id/bt_add_trip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/bt_add_trip"
-                    android:id="@+id/bt_add_trip"/>
+                    android:text="@string/bt_add_trip" />
 
             </LinearLayout>
         </android.support.v7.widget.CardView>

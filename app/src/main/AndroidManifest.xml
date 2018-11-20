@@ -22,7 +22,13 @@
             </intent-filter>
         </activity>
         <activity android:name="edu.nanodegreeprojects.capstone.travelendar.activities.AddTripActivity" />
-        <activity android:name="edu.nanodegreeprojects.capstone.travelendar.activities.DetailTripActivity" />
+        <activity android:name="edu.nanodegreeprojects.capstone.travelendar.activities.DetailTripActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity" />
+        </activity>
+
         <activity android:name="edu.nanodegreeprojects.capstone.travelendar.activities.GoogleMaps" />
 
         <provider
@@ -53,8 +59,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
     </application>
 

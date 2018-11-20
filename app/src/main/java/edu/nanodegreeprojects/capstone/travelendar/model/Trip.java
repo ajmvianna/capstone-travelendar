@@ -15,8 +15,7 @@ public class Trip implements Serializable {
     private String status;
 
 
-    public Trip()
-    {
+    public Trip() {
         this.id = 7;
         this.toWhere.setPlaceName("to");
         this.fromWhere.setPlaceName("from");
@@ -27,6 +26,7 @@ public class Trip implements Serializable {
         this.generalNotes = "generalNotes";
         this.status = "upcoming";
     }
+
     public Trip(PlaceItem toWhere, PlaceItem fromWhere, String initialDate, String endDate, int rate, float budget, String generalNotes, String status) {
         this.toWhere = toWhere;
         this.fromWhere = fromWhere;
@@ -121,4 +121,6 @@ public class Trip implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+
+
 }

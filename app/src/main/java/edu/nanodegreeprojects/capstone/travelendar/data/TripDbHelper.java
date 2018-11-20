@@ -20,7 +20,7 @@ import edu.nanodegreeprojects.capstone.travelendar.model.Trip;
 
 public class TripDbHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "tripDB.db";
+    private static final String DATABASE_NAME = "tripsDB.db";
     private static final int DATABASE_VERSION = 1;
     private static ContentResolver contentResolver;
 
@@ -126,14 +126,14 @@ public class TripDbHelper extends SQLiteOpenHelper {
                 while (cursor.moveToNext()) {
                     placeItemFrom =
                             new PlaceItem(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_NAME)),
-                                    new LatLng(Float.parseFloat(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_LATITUDE))),
-                                            Float.parseFloat(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_LONGITUDE)))),
+                                    Double.parseDouble(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_LATITUDE))),
+                                            Double.parseDouble(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_LONGITUDE))),
                                     cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_ADDRESS)));
 
                     placeItemTo =
                             new PlaceItem(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_NAME)),
-                                    new LatLng(Float.parseFloat(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_LATITUDE))),
-                                            Float.parseFloat(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_LONGITUDE)))),
+                                    Double.parseDouble(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_LATITUDE))),
+                                            Double.parseDouble(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_LONGITUDE))),
                                     cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_ADDRESS)));
 
                     trip = new Trip(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_ID))),
@@ -163,13 +163,13 @@ public class TripDbHelper extends SQLiteOpenHelper {
             cv.put(TripContract.TripContractEntry.COLUMN_ID, trip.getId());
 
         cv.put(TripContract.TripContractEntry.COLUMN_TO_WHERE_NAME, trip.getToWhere().getPlaceName());
-        cv.put(TripContract.TripContractEntry.COLUMN_TO_WHERE_LATITUDE, String.valueOf(trip.getToWhere().getLatLng().latitude));
-        cv.put(TripContract.TripContractEntry.COLUMN_TO_WHERE_LONGITUDE, String.valueOf(trip.getToWhere().getLatLng().longitude));
+        cv.put(TripContract.TripContractEntry.COLUMN_TO_WHERE_LATITUDE, String.valueOf(trip.getToWhere().getLatitude()));
+        cv.put(TripContract.TripContractEntry.COLUMN_TO_WHERE_LONGITUDE, String.valueOf(trip.getToWhere().getLongitude()));
         cv.put(TripContract.TripContractEntry.COLUMN_TO_WHERE_ADDRESS, trip.getToWhere().getAddress());
 
         cv.put(TripContract.TripContractEntry.COLUMN_FROM_WHERE_NAME, trip.getFromWhere().getPlaceName());
-        cv.put(TripContract.TripContractEntry.COLUMN_FROM_WHERE_LATITUDE, String.valueOf(trip.getFromWhere().getLatLng().latitude));
-        cv.put(TripContract.TripContractEntry.COLUMN_FROM_WHERE_LONGITUDE, String.valueOf(trip.getFromWhere().getLatLng().longitude));
+        cv.put(TripContract.TripContractEntry.COLUMN_FROM_WHERE_LATITUDE, String.valueOf(trip.getFromWhere().getLatitude()));
+        cv.put(TripContract.TripContractEntry.COLUMN_FROM_WHERE_LONGITUDE, String.valueOf(trip.getFromWhere().getLongitude()));
         cv.put(TripContract.TripContractEntry.COLUMN_FROM_WHERE_ADDRESS, trip.getFromWhere().getAddress());
 
         cv.put(TripContract.TripContractEntry.COLUMN_INITIAL_DATE, trip.getInitialDate());

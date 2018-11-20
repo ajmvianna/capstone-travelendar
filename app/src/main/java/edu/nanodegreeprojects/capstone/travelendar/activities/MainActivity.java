@@ -1,8 +1,6 @@
 package edu.nanodegreeprojects.capstone.travelendar.activities;
 
-import android.app.Activity;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,28 +8,31 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import edu.nanodegreeprojects.capstone.travelendar.R;
 import edu.nanodegreeprojects.capstone.travelendar.adapters.PageAdapter;
 import edu.nanodegreeprojects.capstone.travelendar.adapters.TripAdapter;
@@ -40,7 +41,6 @@ import edu.nanodegreeprojects.capstone.travelendar.data.TripDbHelper;
 import edu.nanodegreeprojects.capstone.travelendar.fragments.TabOneUpComingTrip;
 import edu.nanodegreeprojects.capstone.travelendar.fragments.TabTwoConcludedTrip;
 import edu.nanodegreeprojects.capstone.travelendar.model.Trip;
-import edu.nanodegreeprojects.capstone.travelendar.widget.TripWidgetService;
 
 public class MainActivity extends AppCompatActivity implements TabOneUpComingTrip.OnFragmentInteractionListener,
         TabTwoConcludedTrip.OnFragmentInteractionListener,
@@ -69,8 +69,16 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
+    @BindView(R.id.main_toolbar)
+    Toolbar mainToolbar;
+
+    @BindString(R.string.app_name)
+    String appName;
+
     @BindString(R.string.error_loading_trips_message)
     String errorLoadingTripsMessage;
+
+
 
     private TripDbHelper tripDbHelper = new TripDbHelper(this);
     private List<Trip> concludedTripsList = new ArrayList<>();
@@ -78,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
 
     private static final int TASK_LOADER_ID = 0;
     private int CURRENT_TAB_POSITION = 0;
+    public static final String TRIP_EXTRA_TAG = "trip";
 
 
     @Override
@@ -85,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        setSupportActionBar(mainToolbar);
 
         loadMainTabs();
         fetchTrips();
@@ -138,16 +149,20 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
         switch (tab) {
             case 0:
                 ButterKnife.bind(this);
-                recyclerViewTabOne.setLayoutManager(layoutManager);
-                tripAdapter.setTripData(upComingTripsList);
-                recyclerViewTabOne.setAdapter(tripAdapter);
+                if (recyclerViewTabOne != null) {
+                    recyclerViewTabOne.setLayoutManager(layoutManager);
+                    tripAdapter.setTripData(upComingTripsList);
+                    recyclerViewTabOne.setAdapter(tripAdapter);
+                }
                 break;
             case 1:
 
                 ButterKnife.bind(this);
-                recyclerViewTabTwo.setLayoutManager(layoutManager);
-                tripAdapter.setTripData(concludedTripsList);
-                recyclerViewTabTwo.setAdapter(tripAdapter);
+                if (recyclerViewTabTwo != null) {
+                    recyclerViewTabTwo.setLayoutManager(layoutManager);
+                    tripAdapter.setTripData(concludedTripsList);
+                    recyclerViewTabTwo.setAdapter(tripAdapter);
+                }
                 break;
         }
 
@@ -164,23 +179,23 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
     @Override
     public void onClick(Trip trip) {
 
+
+        Intent intent = new Intent(this, DetailTripActivity.class);
+        intent.putExtra(TRIP_EXTRA_TAG, trip);
+        startActivity(intent);
+
+
 //        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 //        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, TripWidgetService.class));
 //        //Trigger data update to handle the GridView widgets and force a data refresh
 //        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ll_widget);
 
-        //        Intent intent = new Intent(this, DetailTripActivity.class);
-//        intent.putExtra("trip", trip);
-//        startActivity(intent);
 
 //        Intent intent = new Intent(this, GoogleMaps.class);
 //        startActivity(intent);
 
 
-
     }
-
-
 
     @NonNull
     @Override
@@ -267,7 +282,6 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
 
     @Override
     public void onLoaderReset(@NonNull Loader<List<Trip>> loader) {
-
     }
 
     private void showProgressBar(boolean visibility) {
@@ -288,5 +302,35 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
                 break;
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+
+    //    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.main_menu, menu);
+//        return true;
+//    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.main_menu_add_trip:
+                Intent intent = new Intent(this, AddTripActivity.class);
+                startActivity(intent);
+                break;
+        }
+
+        return true;
+    }
+
 
 }

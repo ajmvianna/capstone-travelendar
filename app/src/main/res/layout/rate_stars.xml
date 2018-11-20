@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/ll_rate_stars"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+    <!--TODO preencher content description-->
+    <ImageView
+        android:id="@+id/iv_rate_star_1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:onClick="rateClick"
+        android:src="@drawable/star_filled" />
+
+    <ImageView
+        android:id="@+id/iv_rate_star_2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:onClick="rateClick"
+        android:src="@drawable/star_blank" />
+
+    <ImageView
+        android:id="@+id/iv_rate_star_3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:onClick="rateClick"
+        android:src="@drawable/star_blank" />
+
+    <ImageView
+        android:id="@+id/iv_rate_star_4"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:onClick="rateClick"
+        android:src="@drawable/star_blank" />
+
+    <ImageView
+        android:id="@+id/iv_rate_star_5"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:onClick="rateClick"
+        android:src="@drawable/star_blank" />
+</LinearLayout>

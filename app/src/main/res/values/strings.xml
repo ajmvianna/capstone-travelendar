@@ -2,8 +2,8 @@
     <string name="app_name">Travelendar</string>
 
     <!--Main Activity-->
-
     <string name="error_loading_trips_message">Erro ao carregar viagens!</string>
+    <string name="main_menu_add_trip_title">Add viagem</string>
 
     <!--Tab 0 - UpComing trips-->
     <string name="title_tab_one_upcoming_trip">Próximas</string>
@@ -24,6 +24,12 @@
     <string name="end_trip_error_message">Erro ao concluir viagem!</string>
     <string name="rate_trip_message_title">Avalie essa viagem!</string>
     <string name="rate_trip_confirmation">Confirmar avaliação</string>
+    <string name="toolbar_title_details">Detalhes da viagem</string>
+    <string name="menu_details_end_trip_title">Finalizar viagem</string>
+    <string name="menu_details_share_trip_title">Compartilhar viagem</string>
+    <string name="share_trip_title">Compartilhar viagem</string>
+    <string name="share_trip_message">Gostaria de compartilhar com você essa viagem que fiz\.\.\.</string>
+    <string name="share_app_link">https://app.travelendar.com/download</string>
 
     <!--Trip item information-->
     <!--Trip hints-->
@@ -37,14 +43,14 @@
     <string name="trip_status_hint">Ex.: Concluded</string>
 
     <!--Trip Labels-->
-    <string name="trip_to_where_label">Para:</string>
-    <string name="trip_from_where_label">De:</string>
-    <string name="trip_initial_date_label">Data Inicial:</string>
-    <string name="trip_end_date_label">Data Final:</string>
-    <string name="trip_rate_label">Nota:</string>
-    <string name="trip_budget_label">Despesas:</string>
-    <string name="trip_general_notes_label">Anotações Gerais:</string>
-    <string name="trip_status_label">Status:</string>
+    <string name="trip_to_where_label">Para: </string>
+    <string name="trip_from_where_label">De: </string>
+    <string name="trip_initial_date_label">Data Inicial: </string>
+    <string name="trip_end_date_label">Data Final: </string>
+    <string name="trip_rate_label">Nota: </string>
+    <string name="trip_budget_label">Despesas: </string>
+    <string name="trip_general_notes_label">Anotações Gerais: </string>
+    <string name="trip_status_label">Status: </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

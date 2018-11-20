@@ -1,14 +1,27 @@
 package edu.nanodegreeprojects.capstone.travelendar.activities;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +33,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
 import edu.nanodegreeprojects.capstone.travelendar.R;
+import edu.nanodegreeprojects.capstone.travelendar.data.ContentProviderContract;
 import edu.nanodegreeprojects.capstone.travelendar.data.TripDbHelper;
 import edu.nanodegreeprojects.capstone.travelendar.model.Trip;
 
 
-public class DetailTripActivity extends AppCompatActivity {
+public class DetailTripActivity extends AppCompatActivity implements com.google.android.gms.maps.OnMapReadyCallback {
 
     @BindView(R.id.et_trip_to_where)
     EditText edtToWhere;
@@ -34,6 +48,9 @@ public class DetailTripActivity extends AppCompatActivity {
 
     @BindView(R.id.et_trip_initial_date)
     EditText edtInitialDate;
+
+    @BindView(R.id.tv_trip_rate_label)
+    TextView tvRate;
 
     @BindView(R.id.et_trip_rate)
     EditText edtRate;
@@ -47,11 +64,8 @@ public class DetailTripActivity extends AppCompatActivity {
     @BindView(R.id.et_trip_general_notes)
     EditText edtGeneralNotes;
 
-    @BindView(R.id.et_trip_status)
-    EditText edtStatus;
-
-    @BindView(R.id.bt_end_trip)
-    Button btnEndTrip;
+    @BindView(R.id.details_toolbar)
+    Toolbar detailsToolbar;
 
     @BindDrawable(R.drawable.star_blank)
     Drawable drwStarBlank;
@@ -68,6 +82,33 @@ public class DetailTripActivity extends AppCompatActivity {
     @BindString(R.string.rate_trip_message_title)
     String rateTripMessageTitle;
 
+    @BindString(R.string.share_trip_title)
+    String shareTripTitle;
+
+    @BindString(R.string.share_trip_message)
+    String shareTripMessage;
+
+    @BindString(R.string.trip_from_where_label)
+    String tripWhereFromLabel;
+
+    @BindString(R.string.trip_to_where_label)
+    String tripWhereToLabel;
+
+    @BindString(R.string.trip_initial_date_label)
+    String tripInitialDateLabel;
+
+    @BindString(R.string.trip_end_date_label)
+    String tripEndDateLabel;
+
+    @BindString(R.string.trip_rate_label)
+    String tripRateLabel;
+
+    @BindString(R.string.share_app_link)
+    String shareAppLink;
+
+    @BindString(R.string.app_name)
+    String appName;
+
     private Trip trip;
     private TripDbHelper tripDbHelper = new TripDbHelper(this);
 
@@ -77,15 +118,14 @@ public class DetailTripActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_trip);
         ButterKnife.bind(this);
 
-        if (getIntent().getSerializableExtra("trip") != null)
-            trip = (Trip) getIntent().getSerializableExtra("trip");
+        setSupportActionBar(detailsToolbar);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setHomeButtonEnabled(true);
+
+        if (getIntent().getSerializableExtra(MainActivity.TRIP_EXTRA_TAG) != null)
+            trip = (Trip) getIntent().getSerializableExtra(MainActivity.TRIP_EXTRA_TAG);
 
         loadData(trip);
-    }
-
-    @OnClick(R.id.fab_back)
-    public void back(View view) {
-        onBackPressed();
     }
 
     @Optional
@@ -93,7 +133,6 @@ public class DetailTripActivity extends AppCompatActivity {
     public void rateClick(View view) {
 
         int maxRate = 5;
-
 
         ImageView ivRateStar1 = view.getRootView().findViewById(R.id.iv_rate_star_1);
         ImageView ivRateStar2 = view.getRootView().findViewById(R.id.iv_rate_star_2);
@@ -143,16 +182,13 @@ public class DetailTripActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.bt_end_trip)
     public void endTrip() {
-
         View view = getLayoutInflater().inflate(R.layout.rate_trip_message, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(rateTripMessageTitle);
         builder.setView(view);
         builder.show();
         ButterKnife.bind(this);
-
     }
 
     private void loadData(Trip trip) {
@@ -161,10 +197,95 @@ public class DetailTripActivity extends AppCompatActivity {
         edtFromWhere.setText(trip.getFromWhere().getPlaceName());
         edtInitialDate.setText(trip.getInitialDate());
         edtEndDate.setText(trip.getEndDate());
-        edtRate.setText(String.valueOf(trip.getRate()));
         edtBudget.setText(String.valueOf(trip.getBudget()));
         edtGeneralNotes.setText(trip.getGeneralNotes());
-        edtStatus.setText(trip.getStatus());
+        if (trip.getStatus().equals(ContentProviderContract.PATH_CONCLUDED_TRIPS)) {
+            tvRate.setVisibility(View.VISIBLE);
+            edtRate.setVisibility(View.VISIBLE);
+            edtRate.setText(String.valueOf(trip.getRate()));
+        }
+
+        loadMapDetails();
+
     }
+
+    private void loadMapDetails() {
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_detail);
+        assert mapFragment != null;
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+
+        final GoogleMap gMaps = map;
+        map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                gMaps.addMarker(new MarkerOptions().position(new LatLng(trip.getFromWhere().getLatitude(), trip.getFromWhere().getLongitude())).title(trip.getFromWhere().getPlaceName()));
+                gMaps.addMarker(new MarkerOptions().position(new LatLng(trip.getToWhere().getLatitude(), trip.getToWhere().getLongitude())).title(trip.getToWhere().getPlaceName()));
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                builder.include(new LatLng(trip.getFromWhere().getLatitude(), trip.getFromWhere().getLongitude()));
+                builder.include(new LatLng(trip.getToWhere().getLatitude(), trip.getToWhere().getLongitude()));
+
+                LatLngBounds bounds = builder.build();
+                int padding = 200;
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                gMaps.animateCamera(cameraUpdate);
+            }
+        });
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.details_menu, menu);
+
+        if (!trip.getStatus().equals(ContentProviderContract.PATH_CONCLUDED_TRIPS)) {
+            menu.getItem(0).setVisible(true);
+            menu.getItem(1).setVisible(false);
+        } else {
+            menu.getItem(0).setVisible(false);
+            menu.getItem(1).setVisible(true);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_details_end_trip:
+                endTrip();
+                break;
+            case R.id.menu_details_share_trip:
+                shareTrip();
+                break;
+        }
+        return true;
+    }
+
+    public void shareTrip() {
+        startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setText(tripToString())
+                .getIntent(), shareTripTitle));
+    }
+
+    public String tripToString() {
+        return "*" + appName + ":* \n\n" +
+                shareTripMessage + "\n\n" +
+                "*" + tripWhereFromLabel + "* " + trip.getFromWhere().getPlaceName() + "\n" +
+                "*" + tripWhereToLabel + "* " + trip.getToWhere().getPlaceName() + "\n" +
+                "*" + tripInitialDateLabel + "* " + trip.getInitialDate() + "\n" +
+                "*" + tripEndDateLabel + "* " + trip.getEndDate() + "\n\n" +
+                "*" + tripRateLabel + "* " + trip.getRate() + "\n\n" +
+                shareAppLink;
+
+
+    }
+
 
 }
