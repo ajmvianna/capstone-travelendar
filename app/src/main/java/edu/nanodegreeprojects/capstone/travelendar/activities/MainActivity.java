@@ -1,5 +1,8 @@
 package edu.nanodegreeprojects.capstone.travelendar.activities;
 
+import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +21,11 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +40,7 @@ import edu.nanodegreeprojects.capstone.travelendar.data.TripDbHelper;
 import edu.nanodegreeprojects.capstone.travelendar.fragments.TabOneUpComingTrip;
 import edu.nanodegreeprojects.capstone.travelendar.fragments.TabTwoConcludedTrip;
 import edu.nanodegreeprojects.capstone.travelendar.model.Trip;
+import edu.nanodegreeprojects.capstone.travelendar.widget.TripWidgetService;
 
 public class MainActivity extends AppCompatActivity implements TabOneUpComingTrip.OnFragmentInteractionListener,
         TabTwoConcludedTrip.OnFragmentInteractionListener,
@@ -155,11 +164,23 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
     @Override
     public void onClick(Trip trip) {
 
-        Intent intent = new Intent(this, DetailTripActivity.class);
-        intent.putExtra("trip", trip);
-        startActivity(intent);
+//        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+//        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, TripWidgetService.class));
+//        //Trigger data update to handle the GridView widgets and force a data refresh
+//        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ll_widget);
+
+        //        Intent intent = new Intent(this, DetailTripActivity.class);
+//        intent.putExtra("trip", trip);
+//        startActivity(intent);
+
+//        Intent intent = new Intent(this, GoogleMaps.class);
+//        startActivity(intent);
+
+
 
     }
+
+
 
     @NonNull
     @Override

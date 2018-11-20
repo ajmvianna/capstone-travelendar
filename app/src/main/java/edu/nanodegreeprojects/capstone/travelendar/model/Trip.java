@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class Trip implements Serializable {
 
     private int id;
-    private String toWhere;
-    private String fromWhere;
+    private PlaceItem toWhere;
+    private PlaceItem fromWhere;
     private String initialDate;
     private String endDate;
     private int rate;
@@ -18,8 +18,8 @@ public class Trip implements Serializable {
     public Trip()
     {
         this.id = 7;
-        this.toWhere = "to";
-        this.fromWhere = "from";
+        this.toWhere.setPlaceName("to");
+        this.fromWhere.setPlaceName("from");
         this.initialDate = "initialDate";
         this.endDate = "endDate";
         this.rate = 1;
@@ -27,7 +27,7 @@ public class Trip implements Serializable {
         this.generalNotes = "generalNotes";
         this.status = "upcoming";
     }
-    public Trip(String toWhere, String fromWhere, String initialDate, String endDate, int rate, float budget, String generalNotes, String status) {
+    public Trip(PlaceItem toWhere, PlaceItem fromWhere, String initialDate, String endDate, int rate, float budget, String generalNotes, String status) {
         this.toWhere = toWhere;
         this.fromWhere = fromWhere;
         this.initialDate = initialDate;
@@ -38,7 +38,7 @@ public class Trip implements Serializable {
         this.status = status;
     }
 
-    public Trip(int id, String toWhere, String fromWhere, String initialDate, String endDate, int rate, float budget, String generalNotes, String status) {
+    public Trip(int id, PlaceItem toWhere, PlaceItem fromWhere, String initialDate, String endDate, int rate, float budget, String generalNotes, String status) {
         this.id = id;
         this.toWhere = toWhere;
         this.fromWhere = fromWhere;
@@ -58,19 +58,19 @@ public class Trip implements Serializable {
         this.id = id;
     }
 
-    public String getToWhere() {
+    public PlaceItem getToWhere() {
         return toWhere;
     }
 
     public void setToWhere(String to) {
-        this.toWhere = to;
+        this.toWhere = toWhere;
     }
 
-    public String getFromWhere() {
+    public PlaceItem getFromWhere() {
         return fromWhere;
     }
 
-    public void setFromWhere(String fromWhere) {
+    public void setFromWhere(PlaceItem fromWhere) {
         this.fromWhere = fromWhere;
     }
 

@@ -1,10 +1,17 @@
 package edu.nanodegreeprojects.capstone.travelendar.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -12,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import edu.nanodegreeprojects.capstone.travelendar.R;
 import edu.nanodegreeprojects.capstone.travelendar.data.TripDbHelper;
+import edu.nanodegreeprojects.capstone.travelendar.model.PlaceItem;
 import edu.nanodegreeprojects.capstone.travelendar.model.Trip;
 
 
@@ -48,6 +56,10 @@ public class AddTripActivity extends AppCompatActivity {
     String fillAllFieldsMessage;
 
     private TripDbHelper tripDbHelper = new TripDbHelper(this);
+    private static final int PLACE_PICKER_REQUEST_TO = 1;
+    private static final int PLACE_PICKER_REQUEST_FROM = 2;
+    private PlaceItem placeTo;
+    private PlaceItem placeFrom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +77,8 @@ public class AddTripActivity extends AppCompatActivity {
     public void addTrip(View view) {
         int addRes;
         if (areFieldsFilled()) {
-            Trip trip = new Trip(edtToWhere.getText().toString(),
-                    edtFromWhere.getText().toString(),
+            Trip trip = new Trip(placeTo,
+                    placeFrom,
                     edtInitialDate.getText().toString(),
                     edtEndDate.getText().toString(),
                     0,
@@ -100,4 +112,54 @@ public class AddTripActivity extends AppCompatActivity {
                 !edtStatus.getText().toString().equals(""));
     }
 
+    private void getLocalScreen(int requestId) {
+
+        switch (requestId) {
+            case PLACE_PICKER_REQUEST_TO:
+                placeTo = null;
+                edtToWhere.setText("");
+                break;
+            case PLACE_PICKER_REQUEST_FROM:
+                placeFrom = null;
+                edtFromWhere.setText("");
+                break;
+        }
+
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            Intent intent = builder.build(this);
+            startActivityForResult(intent, requestId);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PLACE_PICKER_REQUEST_TO) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(this, data);
+                if (place != null) {
+                    placeTo = new PlaceItem(place.getName().toString(),
+                            place.getLatLng(),
+                            place.getAddress().toString());
+                    edtToWhere.setText(placeTo.getPlaceName());
+                }
+
+            }
+        }
+
+        if (requestCode == PLACE_PICKER_REQUEST_FROM) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(this, data);
+                if (place != null) {
+                    placeFrom = new PlaceItem(place.getName().toString(),
+                            place.getLatLng(),
+                            place.getAddress().toString());
+                    edtFromWhere.setText(placeFrom.getPlaceName());
+                }
+            }
+        }
+    }
 }

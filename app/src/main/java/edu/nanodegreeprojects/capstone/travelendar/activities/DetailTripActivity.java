@@ -157,8 +157,8 @@ public class DetailTripActivity extends AppCompatActivity {
 
     private void loadData(Trip trip) {
 
-        edtToWhere.setText(trip.getToWhere());
-        edtFromWhere.setText(trip.getFromWhere());
+        edtToWhere.setText(trip.getToWhere().getPlaceName());
+        edtFromWhere.setText(trip.getFromWhere().getPlaceName());
         edtInitialDate.setText(trip.getInitialDate());
         edtEndDate.setText(trip.getEndDate());
         edtRate.setText(String.valueOf(trip.getRate()));

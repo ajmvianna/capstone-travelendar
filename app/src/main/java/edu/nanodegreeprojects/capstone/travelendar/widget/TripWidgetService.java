@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.SystemClock;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -12,6 +13,7 @@ import android.widget.RemoteViewsService;
 import edu.nanodegreeprojects.capstone.travelendar.R;
 import edu.nanodegreeprojects.capstone.travelendar.data.ContentProviderContract;
 import edu.nanodegreeprojects.capstone.travelendar.data.TripContract;
+import edu.nanodegreeprojects.capstone.travelendar.model.Trip;
 
 public class TripWidgetService extends RemoteViewsService {
 
@@ -19,27 +21,30 @@ public class TripWidgetService extends RemoteViewsService {
 
     public final static String SHOW_INGREDIENTS_LIST = "edu.nanodegreeprojects.bakingapp.ingredients_list";
 
-    public Cursor getIngredientsList() {
-        Uri INGREDIENT = ContentProviderContract.BASE_CONTENT_URI;
-        Cursor cursor = getContentResolver().query(INGREDIENT, null, null, null, null);
-        return cursor;
+    public Trip getMostUpComingTrip() {
+        //Trip trip = new Trip();
+//        Uri INGREDIENT = ContentProviderContract.BASE_CONTENT_URI;
+//        Cursor cursor = getContentResolver().query(INGREDIENT, null, null, null, null);
+        return new Trip();
     }
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new ListWidgetItem(getApplicationContext(), getIngredientsList());
+        return new WidgetItem(getApplicationContext(), getMostUpComingTrip());
     }
 
-    public class ListWidgetItem implements RemoteViewsFactory {
+
+
+    public class WidgetItem implements  RemoteViewsFactory {
 
         private Context context;
-        private Cursor cursor;
+        private Trip trip;
         private String[] exampleData = {"one", "two", "three", "four",
                 "five", "six", "seven", "eight", "nine", "ten"};
 
-        public ListWidgetItem(Context context, Cursor cursor) {
+        public WidgetItem(Context context, Trip trip) {
             this.context = context;
-            this.cursor = cursor;
+            this.trip = trip;
         }
 
         @Override
@@ -49,6 +54,10 @@ public class TripWidgetService extends RemoteViewsService {
 
         @Override
         public void onDataSetChanged() {
+            //trip.setToWhere("deuBao");
+            //trip.setFromWhere("deuBao");
+            trip.setInitialDate("deuBao");
+            trip.setEndDate("deuBao");
 
         }
 
@@ -59,26 +68,35 @@ public class TripWidgetService extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            if (cursor != null)
-                return cursor.getCount();
-            else
+//            if (trip != null)
+//                return trip.getCount();
+//            else
                 return 1;
         }
+
 
         @Override
         public RemoteViews getViewAt(int position) {
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.trip_widget);
 
-            if (cursor != null && getCount() > 0) {
-                //Log.d("entrou no update", String.valueOf(getCount()));
-                int indexIngredient = cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE);
-                cursor.moveToPosition(position);
+            if (trip != null) {
+                Log.d("entrou no update", String.valueOf(getCount()));
+//                int indexIngredient = cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE);
+//                cursor.moveToPosition(position);
 
-                String ingredient = cursor.getString(indexIngredient);
-                remoteViews.setTextViewText(R.id.txt_ingredient_widget, ingredient);
+                //String toWhere = trip.getToWhere();
+                //String fromWhere = trip.getFromWhere();
+                String initialDate = trip.getInitialDate();
+                String endDate = trip.getEndDate();
+
+//                String ingredient = cursor.getString(indexIngredient);
+                //remoteViews.setTextViewText(R.id.tv_trip_to_where_label_widget, toWhere);
+                //remoteViews.setTextViewText(R.id.tv_trip_from_where_label_widget, fromWhere);
+                remoteViews.setTextViewText(R.id.tv_trip_initial_date_label_widget, initialDate);
+                remoteViews.setTextViewText(R.id.tv_trip_end_date_label_widget, endDate);
             } else {
                 Log.d("nao entrou no update", String.valueOf(getCount()));
-                remoteViews.setTextViewText(R.id.txt_ingredient_widget, "No data");
+                //remoteViews.setTextViewText(R.id.txt_ingredient_widget, "No data");
             }
             //return null;
             return remoteViews;

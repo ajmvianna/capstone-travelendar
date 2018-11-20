@@ -25,7 +25,10 @@ public class TripWidget extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.trip_widget);
         //views.setRemoteAdapter(R.id.list_ingredients_widget, widgetIntent);
-
+        views.setTextViewText(R.id.tv_trip_to_where_label_widget, "1");
+        views.setTextViewText(R.id.tv_trip_from_where_label_widget, "2");
+        views.setTextViewText(R.id.tv_trip_initial_date_label_widget, "3");
+        views.setTextViewText(R.id.tv_trip_end_date_label_widget, "4");
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
