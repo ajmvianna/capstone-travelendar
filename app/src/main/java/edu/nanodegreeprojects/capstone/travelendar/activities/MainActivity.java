@@ -78,8 +78,6 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
     @BindString(R.string.error_loading_trips_message)
     String errorLoadingTripsMessage;
 
-
-
     private TripDbHelper tripDbHelper = new TripDbHelper(this);
     private List<Trip> concludedTripsList = new ArrayList<>();
     private List<Trip> upComingTripsList = new ArrayList<>();
@@ -310,14 +308,6 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
         menuInflater.inflate(R.menu.main_menu, menu);
         return true;
     }
-
-
-    //    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater menuInflater = getMenuInflater();
-//        menuInflater.inflate(R.menu.main_menu, menu);
-//        return true;
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
