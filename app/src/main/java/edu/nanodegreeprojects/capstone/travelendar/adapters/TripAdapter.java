@@ -31,12 +31,17 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripAdapterVie
 
     private final TripAdapterOnClickHandler mClickHandler;
 
+
     public interface TripAdapterOnClickHandler {
+        void onClick(Trip trip);
+    }
+    public interface TripAdapterOnLongClickHandler {
         void onClick(Trip trip);
     }
 
     public TripAdapter(TripAdapterOnClickHandler clickHandler) {
         mClickHandler = clickHandler;
+
     }
 
     public class TripAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -78,6 +83,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripAdapterVie
             int adapterPosition = getAdapterPosition();
             mClickHandler.onClick(tripList.get(adapterPosition));
         }
+
     }
 
 
@@ -90,6 +96,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripAdapterVie
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
         return new TripAdapterViewHolder(view);
     }
+
 
     @Override
     public void onBindViewHolder(TripAdapterViewHolder tripAdapterViewHolder, int position) {

@@ -9,8 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +21,11 @@ public class TripDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "tripsDB.db";
     private static final int DATABASE_VERSION = 1;
     private static ContentResolver contentResolver;
+    private Context context;
 
     public TripDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
         if (contentResolver == null)
             contentResolver = context.getContentResolver();
     }
@@ -86,8 +86,13 @@ public class TripDbHelper extends SQLiteOpenHelper {
     }
 
     public int deleteTrip(Trip trip) {
-        return contentResolver.delete(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_TRIP_ITEM).build(), TripContract.TripContractEntry.COLUMN_ID + "=?", new String[]{String.valueOf(trip.getId())});
-
+        int deleteRes;
+        try {
+            deleteRes = contentResolver.delete(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_TRIP_ITEM).build(), TripContract.TripContractEntry.COLUMN_ID + "=?", new String[]{String.valueOf(trip.getId())});
+        } catch (Exception e) {
+            deleteRes = 0;
+        }
+        return deleteRes;
     }
 
     public List<Trip> getTripList(String criteria, Trip trip) {
@@ -107,9 +112,12 @@ public class TripDbHelper extends SQLiteOpenHelper {
                 resCursor = contentResolver.query(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_TRIP).appendPath(String.valueOf(trip.getId())).build(), null, null, null);
                 break;
             case ContentProviderContract.PATH_MOST_UPCOMING_TRIP:
-                //TODO FAZER QUERY RETORNAR SOMENTE A VIAGEM MAIS PROXIMA
-                resCursor = contentResolver.query(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_MOST_UPCOMING_TRIP).build(), null, null, null);
-                break;
+                Cursor cursor = contentResolver.query(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_MOST_UPCOMING_TRIP).build(), null, null, null);
+                List<Trip> tripList = new ArrayList<>();
+                Trip tripRes = convertCursorIntoTrip(cursor);
+                tripList.add(tripRes);
+                return tripList;
+
         }
 
         return convertCursorIntoTripList(resCursor);
@@ -127,13 +135,13 @@ public class TripDbHelper extends SQLiteOpenHelper {
                     placeItemFrom =
                             new PlaceItem(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_NAME)),
                                     Double.parseDouble(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_LATITUDE))),
-                                            Double.parseDouble(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_LONGITUDE))),
+                                    Double.parseDouble(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_LONGITUDE))),
                                     cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_ADDRESS)));
 
                     placeItemTo =
                             new PlaceItem(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_NAME)),
                                     Double.parseDouble(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_LATITUDE))),
-                                            Double.parseDouble(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_LONGITUDE))),
+                                    Double.parseDouble(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_LONGITUDE))),
                                     cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_ADDRESS)));
 
                     trip = new Trip(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_ID))),
@@ -154,6 +162,47 @@ public class TripDbHelper extends SQLiteOpenHelper {
         }
 
         return tripList;
+    }
+
+    private Trip convertCursorIntoTrip(Cursor cursor) {
+        Trip trip = null;
+        PlaceItem placeItemTo;
+        PlaceItem placeItemFrom;
+
+        if (cursor != null && cursor.getCount() > 0) {
+            try {
+                cursor.moveToFirst();
+
+                placeItemFrom =
+                        new PlaceItem(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_NAME)),
+                                Double.parseDouble(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_LATITUDE))),
+                                Double.parseDouble(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_LONGITUDE))),
+                                cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_FROM_WHERE_ADDRESS)));
+
+                placeItemTo =
+                        new PlaceItem(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_NAME)),
+                                Double.parseDouble(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_LATITUDE))),
+                                Double.parseDouble(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_LONGITUDE))),
+                                cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_TO_WHERE_ADDRESS)));
+
+                trip = new Trip(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_ID))),
+                        placeItemTo,
+                        placeItemFrom,
+                        cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_INITIAL_DATE)),
+                        cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_END_DATE)),
+                        Integer.parseInt(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_RATE))),
+                        Float.parseFloat(cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_BUDGET))),
+                        cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_GENERAL_NOTES)),
+                        cursor.getString(cursor.getColumnIndex(TripContract.TripContractEntry.COLUMN_STATUS))
+                );
+
+
+            } finally {
+                cursor.close();
+            }
+        }
+
+        return trip;
     }
 
     private ContentValues convertTripIntoCV(Trip trip, boolean insert) {

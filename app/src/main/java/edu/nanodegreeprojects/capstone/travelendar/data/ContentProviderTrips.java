@@ -31,6 +31,7 @@ public class ContentProviderTrips extends ContentProvider {
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
         builder.setTables(TripContract.TripContractEntry.TABLE_NAME);
         String idStr = uri.getLastPathSegment();
+        String order = null;
         switch (URI_MATCHER.match(uri)) {
 
             case ContentProviderContract.ALL_TRIPS_CODE:
@@ -46,23 +47,28 @@ public class ContentProviderTrips extends ContentProvider {
                 builder.appendWhere(TripContract.TripContractEntry.COLUMN_STATUS +
                         "='" +
                         idStr + "'");
+                order = TripContract.TripContractEntry.COLUMN_INITIAL_DATE + " DESC";
                 break;
 
             case ContentProviderContract.UPCOMING_TRIPS:
                 builder.appendWhere(TripContract.TripContractEntry.COLUMN_STATUS +
                         "='" +
                         idStr + "'");
+                order = TripContract.TripContractEntry.COLUMN_INITIAL_DATE + " ASC";
                 break;
             case ContentProviderContract.MOST_UPCOMING_TRIP:
                 builder.appendWhere(TripContract.TripContractEntry.COLUMN_STATUS +
                         "='" +
                         ContentProviderContract.PATH_UPCOMING_TRIPS + "'");
+                order = TripContract.TripContractEntry.COLUMN_INITIAL_DATE + " ASC";
+
+
                 break;
             default:
                 throw new IllegalArgumentException(
                         "Unsupported URI: " + uri);
         }
-        return builder.query(db, strings, s, strings1, s1, null, null);
+        return builder.query(db, strings, s, strings1, s1, null, order);
     }
 
     @Nullable
@@ -101,6 +107,7 @@ public class ContentProviderTrips extends ContentProvider {
             case ContentProviderContract.TRIP_ITEM_CODE:
                 builder.setTables(TripContract.TripContractEntry.TABLE_NAME);
                 return db.delete(TripContract.TripContractEntry.TABLE_NAME, TripContract.TripContractEntry.COLUMN_ID + "=?", new String[]{idStr});
+
             default:
                 throw new IllegalArgumentException(
                         "Unsupported URI: " + uri);

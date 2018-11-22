@@ -36,6 +36,7 @@ import edu.nanodegreeprojects.capstone.travelendar.R;
 import edu.nanodegreeprojects.capstone.travelendar.data.ContentProviderContract;
 import edu.nanodegreeprojects.capstone.travelendar.data.TripDbHelper;
 import edu.nanodegreeprojects.capstone.travelendar.model.Trip;
+import edu.nanodegreeprojects.capstone.travelendar.widget.TripWidget;
 
 
 public class DetailTripActivity extends AppCompatActivity implements com.google.android.gms.maps.OnMapReadyCallback {
@@ -78,6 +79,12 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
 
     @BindString(R.string.end_trip_error_message)
     String endTripErrorMessage;
+
+    @BindString(R.string.delete_trip_successful_message)
+    String deleteTripSuccessfulMessage;
+
+    @BindString(R.string.delete_trip_error_message)
+    String deleteTripErrorMessage;
 
     @BindString(R.string.rate_trip_message_title)
     String rateTripMessageTitle;
@@ -165,9 +172,10 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
             case R.id.bt_rate_trip_ok:
                 trip.setStatus("concluded");
                 int res = tripDbHelper.updateTrip(trip);
-                if (res == 1)
+                if (res == 1) {
+                    TripWidget.updateWidget(this);
                     Toast.makeText(this, endTripSuccessfulMessage, Toast.LENGTH_SHORT).show();
-                else
+                } else
                     Toast.makeText(this, endTripErrorMessage, Toast.LENGTH_SHORT).show();
                 finish();
                 break;
@@ -180,15 +188,6 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
             else
                 listStars.get(i).setImageDrawable(drwStarBlank);
         }
-    }
-
-    public void endTrip() {
-        View view = getLayoutInflater().inflate(R.layout.rate_trip_message, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(rateTripMessageTitle);
-        builder.setView(view);
-        builder.show();
-        ButterKnife.bind(this);
     }
 
     private void loadData(Trip trip) {
@@ -263,6 +262,9 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
             case R.id.menu_details_share_trip:
                 shareTrip();
                 break;
+            case R.id.menu_details_delete_trip:
+                deleteTrip();
+                break;
         }
         return true;
     }
@@ -287,5 +289,24 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
 
     }
 
+    public void endTrip() {
+        View view = getLayoutInflater().inflate(R.layout.rate_trip_message, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(rateTripMessageTitle);
+        builder.setView(view);
+        builder.show();
+        ButterKnife.bind(this);
+    }
+
+    public void deleteTrip()
+    {
+        int res = tripDbHelper.deleteTrip(trip);
+        if (res == 1) {
+            TripWidget.updateWidget(this);
+            Toast.makeText(this, deleteTripSuccessfulMessage, Toast.LENGTH_SHORT).show();
+        } else
+            Toast.makeText(this, deleteTripErrorMessage, Toast.LENGTH_SHORT).show();
+        finish();
+    }
 
 }

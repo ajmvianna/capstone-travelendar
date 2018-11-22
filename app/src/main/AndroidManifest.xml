@@ -51,9 +51,9 @@
                 android:resource="@xml/trip_widget_info" />
         </receiver>
 
-        <service
-            android:name=".widget.TripWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <!--<service-->
+            <!--android:name=".widget.TripWidgetService"-->
+            <!--android:permission="android.permission.BIND_REMOTEVIEWS" />-->
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

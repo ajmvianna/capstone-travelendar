@@ -1,35 +1,37 @@
 package edu.nanodegreeprojects.capstone.travelendar.widget;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.widget.RemoteViews;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.nanodegreeprojects.capstone.travelendar.R;
-import edu.nanodegreeprojects.capstone.travelendar.activities.MainActivity;
+import edu.nanodegreeprojects.capstone.travelendar.data.ContentProviderContract;
+import edu.nanodegreeprojects.capstone.travelendar.data.TripDbHelper;
+import edu.nanodegreeprojects.capstone.travelendar.model.Trip;
 
 public class TripWidget extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    public static Trip tripWidget;
 
-//        CharSequence widgetText = context.getString(R.string.appwidget_text);
+    public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                       int appWidgetId) {
 
-        Intent intent = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        RemoteViews views = null;
+        if (tripWidget != null) {
+            views = new RemoteViews(context.getPackageName(), R.layout.trip_widget);
+            views.setTextViewText(R.id.tv_trip_to_where_value_widget, tripWidget.getToWhere().getPlaceName());
+            views.setTextViewText(R.id.tv_trip_from_where_value_widget, tripWidget.getFromWhere().getPlaceName());
+            views.setTextViewText(R.id.tv_trip_initial_date_value_widget, tripWidget.getInitialDate());
+            views.setTextViewText(R.id.tv_trip_end_date_value_widget, tripWidget.getEndDate());
 
-        Intent widgetIntent = new Intent(context, TripWidgetService.class);
-
-        // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.trip_widget);
-        //views.setRemoteAdapter(R.id.list_ingredients_widget, widgetIntent);
-        views.setTextViewText(R.id.tv_trip_to_where_value_widget, "1");
-        views.setTextViewText(R.id.tv_trip_from_where_value_widget, "2");
-        views.setTextViewText(R.id.tv_trip_initial_date_value_widget, "3");
-        views.setTextViewText(R.id.tv_trip_end_date_value_widget, "4");
-        // Instruct the widget manager to update the widget
+        } else {
+            views = new RemoteViews(context.getPackageName(), R.layout.trip_widget_empty);
+        }
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
@@ -50,6 +52,26 @@ public class TripWidget extends AppWidgetProvider {
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
     }
+
+
+    public static void updateWidget(Context context) {
+        List<Trip> tripList = new ArrayList<>();
+        TripDbHelper tripDbHelper = new TripDbHelper(context);
+        tripList = tripDbHelper.getTripList(ContentProviderContract.PATH_MOST_UPCOMING_TRIP, null);
+        if (tripList != null && tripList.size() > 0)
+            tripWidget = tripList.get(0);
+        else
+            tripWidget = null;
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, TripWidget.class));
+
+        for (int appWidgetId : appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId);
+        }
+
+    }
+
 }
 
 

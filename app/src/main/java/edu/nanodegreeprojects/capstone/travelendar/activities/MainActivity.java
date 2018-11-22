@@ -1,6 +1,7 @@
 package edu.nanodegreeprojects.capstone.travelendar.activities;
 
-import android.annotation.SuppressLint;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.app.ShareCompat;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
@@ -21,18 +21,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import edu.nanodegreeprojects.capstone.travelendar.R;
 import edu.nanodegreeprojects.capstone.travelendar.adapters.PageAdapter;
 import edu.nanodegreeprojects.capstone.travelendar.adapters.TripAdapter;
@@ -41,6 +38,7 @@ import edu.nanodegreeprojects.capstone.travelendar.data.TripDbHelper;
 import edu.nanodegreeprojects.capstone.travelendar.fragments.TabOneUpComingTrip;
 import edu.nanodegreeprojects.capstone.travelendar.fragments.TabTwoConcludedTrip;
 import edu.nanodegreeprojects.capstone.travelendar.model.Trip;
+import edu.nanodegreeprojects.capstone.travelendar.widget.TripWidget;
 
 public class MainActivity extends AppCompatActivity implements TabOneUpComingTrip.OnFragmentInteractionListener,
         TabTwoConcludedTrip.OnFragmentInteractionListener,
@@ -97,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
 
         loadMainTabs();
         fetchTrips();
+        TripWidget.updateWidget(this);
     }
 
     private void loadMainTabs() {
@@ -316,11 +315,15 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
             case R.id.main_menu_add_trip:
                 Intent intent = new Intent(this, AddTripActivity.class);
                 startActivity(intent);
+
                 break;
         }
 
         return true;
     }
+
+
+
 
 
 }

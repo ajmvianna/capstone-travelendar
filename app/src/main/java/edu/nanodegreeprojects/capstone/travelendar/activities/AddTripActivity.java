@@ -25,6 +25,7 @@ import edu.nanodegreeprojects.capstone.travelendar.R;
 import edu.nanodegreeprojects.capstone.travelendar.data.TripDbHelper;
 import edu.nanodegreeprojects.capstone.travelendar.model.PlaceItem;
 import edu.nanodegreeprojects.capstone.travelendar.model.Trip;
+import edu.nanodegreeprojects.capstone.travelendar.widget.TripWidget;
 
 
 public class AddTripActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -114,6 +115,7 @@ public class AddTripActivity extends AppCompatActivity implements DatePickerDial
             addRes = tripDbHelper.insertTrip(trip);
             switch (addRes) {
                 case 1:
+                    TripWidget.updateWidget(this);
                     Toast.makeText(this, addTripSuccessfulMessage, Toast.LENGTH_SHORT).show();
                     onBackPressed();
                     break;

@@ -28,9 +28,12 @@
     <string name="toolbar_title_details">Detalhes da viagem</string>
     <string name="menu_details_end_trip_title">Finalizar viagem</string>
     <string name="menu_details_share_trip_title">Compartilhar viagem</string>
+    <string name="menu_details_delete_trip_title">Deletar viagem</string>
     <string name="share_trip_title">Compartilhar viagem</string>
     <string name="share_trip_message">Gostaria de compartilhar com você essa viagem que fiz\.\.\.</string>
     <string name="share_app_link">https://app.travelendar.com/download</string>
+    <string name="delete_trip_successful_message">Viagem deletada!</string>
+    <string name="delete_trip_error_message">Erro ao deletar viagem!</string>
 
     <!--Trip item information-->
     <!--Trip hints-->
@@ -44,17 +47,18 @@
     <string name="trip_status_hint">Ex.: Concluded</string>
 
     <!--Trip Labels-->
-    <string name="trip_to_where_label">Para: </string>
-    <string name="trip_from_where_label">De: </string>
-    <string name="trip_initial_date_label">Data Inicial: </string>
-    <string name="trip_end_date_label">Data Final: </string>
-    <string name="trip_rate_label">Nota: </string>
-    <string name="trip_budget_label">Despesas: </string>
-    <string name="trip_general_notes_label">Anotações Gerais: </string>
-    <string name="trip_status_label">Status: </string>
+    <string name="trip_to_where_label">Para:\ </string>
+    <string name="trip_from_where_label">De:\ </string>
+    <string name="trip_initial_date_label">Data Inicial:\ </string>
+    <string name="trip_end_date_label">Data Final:\ </string>
+    <string name="trip_rate_label">Nota:\ </string>
+    <string name="trip_budget_label">Despesas:\ </string>
+    <string name="trip_general_notes_label">Anotações Gerais:\ </string>
+    <string name="trip_status_label">Status:\ </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="widget_empty_text">Não há nenhuma viagem próxima\.\.\.</string>
     
     <string name="google_maps_key">AIzaSyASjTYINNbC7PplmafFDbMusyGO3tGehAk</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
