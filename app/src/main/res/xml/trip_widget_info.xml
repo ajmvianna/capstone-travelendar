@@ -6,6 +6,6 @@
     android:minWidth="300dp"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="100"
-    android:widgetCategory="home_screen" />
+    android:widgetCategory="home_screen"
+    android:previewImage="@drawable/ic_airplanemode_active_widget"/>
 
-    <!--android:previewImage="@drawable/ic_local_serving_24dp"-->

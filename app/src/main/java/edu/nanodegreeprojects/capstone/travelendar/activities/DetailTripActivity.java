@@ -126,8 +126,8 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
         ButterKnife.bind(this);
 
         setSupportActionBar(detailsToolbar);
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setHomeButtonEnabled(true);
+        if (getActionBar() != null)
+            getActionBar().setHomeButtonEnabled(true);
 
         if (getIntent().getSerializableExtra(MainActivity.TRIP_EXTRA_TAG) != null)
             trip = (Trip) getIntent().getSerializableExtra(MainActivity.TRIP_EXTRA_TAG);
@@ -170,10 +170,11 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
                 trip.setRate(5);
                 break;
             case R.id.bt_rate_trip_ok:
-                trip.setStatus("concluded");
+                trip.setStatus(ContentProviderContract.PATH_CONCLUDED_TRIPS);
                 int res = tripDbHelper.updateTrip(trip);
                 if (res == 1) {
                     TripWidget.updateWidget(this);
+                    MainActivity.updateData = true;
                     Toast.makeText(this, endTripSuccessfulMessage, Toast.LENGTH_SHORT).show();
                 } else
                     Toast.makeText(this, endTripErrorMessage, Toast.LENGTH_SHORT).show();
@@ -269,13 +270,6 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
         return true;
     }
 
-    public void shareTrip() {
-        startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(this)
-                .setType("text/plain")
-                .setText(tripToString())
-                .getIntent(), shareTripTitle));
-    }
-
     public String tripToString() {
         return "*" + appName + ":* \n\n" +
                 shareTripMessage + "\n\n" +
@@ -298,11 +292,18 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
         ButterKnife.bind(this);
     }
 
-    public void deleteTrip()
-    {
+    public void shareTrip() {
+        startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setText(tripToString())
+                .getIntent(), shareTripTitle));
+    }
+
+    public void deleteTrip() {
         int res = tripDbHelper.deleteTrip(trip);
         if (res == 1) {
             TripWidget.updateWidget(this);
+            MainActivity.updateData = true;
             Toast.makeText(this, deleteTripSuccessfulMessage, Toast.LENGTH_SHORT).show();
         } else
             Toast.makeText(this, deleteTripErrorMessage, Toast.LENGTH_SHORT).show();

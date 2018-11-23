@@ -81,14 +81,14 @@ public class TripDbHelper extends SQLiteOpenHelper {
     }
 
     public int updateTrip(Trip trip) {
-        return contentResolver.update(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_TRIP_ITEM).build(), convertTripIntoCV(trip, false), TripContract.TripContractEntry.COLUMN_ID + "=?", new String[]{String.valueOf(trip.getId())});
+        return contentResolver.update(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_TRIP).appendEncodedPath(ContentProviderContract.PATH_TRIP_ITEM).build(), convertTripIntoCV(trip, false), TripContract.TripContractEntry.COLUMN_ID + "=?", new String[]{String.valueOf(trip.getId())});
 
     }
 
     public int deleteTrip(Trip trip) {
         int deleteRes;
         try {
-            deleteRes = contentResolver.delete(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_TRIP_ITEM).build(), TripContract.TripContractEntry.COLUMN_ID + "=?", new String[]{String.valueOf(trip.getId())});
+            deleteRes = contentResolver.delete(ContentProviderContract.BASE_CONTENT_URI.buildUpon().appendPath(ContentProviderContract.PATH_TRIP).appendEncodedPath(ContentProviderContract.PATH_TRIP_ITEM).build(), TripContract.TripContractEntry.COLUMN_ID + "=?", new String[]{String.valueOf(trip.getId())});
         } catch (Exception e) {
             deleteRes = 0;
         }

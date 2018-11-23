@@ -6,19 +6,21 @@
     android:orientation="horizontal"
     android:padding="5dp">
 
-    <!--TODO preencher content description-->
+
     <ImageView
         android:id="@+id/iv_rate_star_1"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:onClick="rateClick"
-        android:src="@drawable/star_filled" />
+        android:contentDescription="@string/star1_content_description"
+        android:src="@drawable/star_blank" />
 
     <ImageView
         android:id="@+id/iv_rate_star_2"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:onClick="rateClick"
+        android:contentDescription="@string/star2_content_description"
         android:src="@drawable/star_blank" />
 
     <ImageView
@@ -26,6 +28,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:onClick="rateClick"
+        android:contentDescription="@string/star3_content_description"
         android:src="@drawable/star_blank" />
 
     <ImageView
@@ -33,6 +36,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:onClick="rateClick"
+        android:contentDescription="@string/star4_content_description"
         android:src="@drawable/star_blank" />
 
     <ImageView
@@ -40,5 +44,6 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:onClick="rateClick"
+        android:contentDescription="@string/star5_content_description"
         android:src="@drawable/star_blank" />
 </LinearLayout>

@@ -13,11 +13,12 @@
 
     <!-- Add trip-->
     <string name="title_tab_three_add_trip">Adicionar nova viagem</string>
-    <string name="bt_add_trip">Adicionar</string>
+    <string name="bt_add_trip">Add</string>
     <string name="add_trip_successful">Viagem adicionada!</string>
     <string name="add_trip_error">Erro ao adicionar viagem!</string>
     <string name="fill_all_fields_message">Por favor, preencher todos os campos!</string>
     <string name="date_picker_error_message">Erro ao abrir calendário!</string>
+    <string name="toolbar_title_add_trip">Adicionar nova viagem</string>
 
     <!--Trip Details-->
     <string name="bt_end_trip">Finalizar Viagem</string>
@@ -56,12 +57,21 @@
     <string name="trip_general_notes_label">Anotações Gerais:\ </string>
     <string name="trip_status_label">Status:\ </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="widget_empty_text">Não há nenhuma viagem próxima\.\.\.</string>
     
     <string name="google_maps_key">AIzaSyASjTYINNbC7PplmafFDbMusyGO3tGehAk</string>
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+    <!--Content descriptions-->
+    <string name="star1_content_description">Avalie com uma estrela!</string>
+    <string name="star2_content_description">Avalie com duas estrela!</string>
+    <string name="star3_content_description">Avalie com três estrelas!</string>
+    <string name="star4_content_description">Avalie com quatro estrelas!</string>
+    <string name="star5_content_description">Avalie com cinco estrelas!</string>
+    <string name="rate_button_content_description">Clique para avaliar a viagem!</string>
+
+    <string name="widget_trip_content_description">Imagem de um avião simbolizando uma viagem!</string>
+
 
 
 </resources>

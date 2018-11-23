@@ -1,7 +1,5 @@
 package edu.nanodegreeprojects.capstone.travelendar.activities;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -83,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
     private static final int TASK_LOADER_ID = 0;
     private int CURRENT_TAB_POSITION = 0;
     public static final String TRIP_EXTRA_TAG = "trip";
+    public static boolean updateData = true;
 
 
     @Override
@@ -93,8 +92,11 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
 
         setSupportActionBar(mainToolbar);
 
+        //if (updateData)
+        //fetchTrips();
+
         loadMainTabs();
-        fetchTrips();
+        loadContentTabs(0);
         TripWidget.updateWidget(this);
     }
 
@@ -111,9 +113,9 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 CURRENT_TAB_POSITION = tab.getPosition();
+                //if (updateData)
                 fetchTrips();
                 viewPager.setCurrentItem(CURRENT_TAB_POSITION);
-                //loadContentTabs(tab.getPosition());
             }
 
             @Override
@@ -134,12 +136,6 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
     }
 
     private void loadContentTabs(int tab) {
-
-//        tripDbHelper.insertTrip(trip);
-//        tripDbHelper.getTripList(ContentProviderContract.PATH_ALL_TRIPS, null);
-//        tripDbHelper.getTripList(ContentProviderContract.PATH_CONCLUDED_TRIPS, null);
-//        tripDbHelper.getTripList(ContentProviderContract.PATH_UPCOMING_TRIPS, null);
-//        tripDbHelper.getTripList(ContentProviderContract.PATH_TRIP, trip);
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         TripAdapter tripAdapter = new TripAdapter(this);
@@ -175,23 +171,9 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
 
     @Override
     public void onClick(Trip trip) {
-
-
         Intent intent = new Intent(this, DetailTripActivity.class);
         intent.putExtra(TRIP_EXTRA_TAG, trip);
         startActivity(intent);
-
-
-//        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-//        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, TripWidgetService.class));
-//        //Trigger data update to handle the GridView widgets and force a data refresh
-//        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ll_widget);
-
-
-//        Intent intent = new Intent(this, GoogleMaps.class);
-//        startActivity(intent);
-
-
     }
 
     @NonNull
@@ -206,13 +188,13 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
             protected void onStartLoading() {
                 showProgressBar(true);
                 forceLoad();
-//                if (mTaskData != null) {
-//                    // Delivers any previously loaded data immediately
-//                    deliverResult(mTaskData);
-//                } else {
-//                    // Force a new load
-//                    forceLoad();
-//                }
+                if (!updateData) {
+                    // Delivers any previously loaded data immediately
+                    deliverResult(mTaskData);
+                } else {
+                    // Force a new load
+                    forceLoad();
+                }
             }
 
             // loadInBackground() performs asynchronous loading of data
@@ -256,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
     @Override
     public void onLoadFinished(@NonNull Loader<List<Trip>> loader, List<Trip> trips) {
         showProgressBar(false);
+        MainActivity.updateData = false;
         if (trips != null) {
             int tabPosition = tabLayout.getSelectedTabPosition();
             switch (tabPosition) {
@@ -321,9 +304,6 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
 
         return true;
     }
-
-
-
 
 
 }

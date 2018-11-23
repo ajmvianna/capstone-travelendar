@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -22,6 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import edu.nanodegreeprojects.capstone.travelendar.R;
+import edu.nanodegreeprojects.capstone.travelendar.data.ContentProviderContract;
 import edu.nanodegreeprojects.capstone.travelendar.data.TripDbHelper;
 import edu.nanodegreeprojects.capstone.travelendar.model.PlaceItem;
 import edu.nanodegreeprojects.capstone.travelendar.model.Trip;
@@ -48,6 +52,9 @@ public class AddTripActivity extends AppCompatActivity implements DatePickerDial
     @BindView(R.id.et_trip_general_notes)
     EditText edtGeneralNotes;
 
+    @BindView(R.id.main_toolbar_add)
+    Toolbar addTripToolbar;
+
     @BindString(R.string.add_trip_successful)
     String addTripSuccessfulMessage;
 
@@ -72,6 +79,11 @@ public class AddTripActivity extends AppCompatActivity implements DatePickerDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip);
         ButterKnife.bind(this);
+
+        setSupportActionBar(addTripToolbar);
+        if (getActionBar() != null)
+            getActionBar().setHomeButtonEnabled(true);
+
         loadDatePickerListeners();
 
     }
@@ -80,7 +92,8 @@ public class AddTripActivity extends AppCompatActivity implements DatePickerDial
         datePickerInitialDate = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date = dayOfMonth + "/" + month + "/" + year;
+                int monthFixed = month + 1;
+                String date = dayOfMonth + "/" + monthFixed + "/" + year;
                 edtInitialDate.setText(date);
             }
         };
@@ -88,19 +101,18 @@ public class AddTripActivity extends AppCompatActivity implements DatePickerDial
         datePickerEndDate = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date = dayOfMonth + "/" + month + "/" + year;
+                int monthFixed = month + 1;
+                String date = dayOfMonth + "/" + monthFixed + "/" + year;
                 edtEndDate.setText(date);
             }
         };
     }
 
-    @OnClick(R.id.fab_back)
-    public void back(View view) {
-        onBackPressed();
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
     }
 
-    @OnClick(R.id.bt_add_trip)
-    public void addTrip(View view) {
+    public void addTrip() {
         int addRes;
         if (areFieldsFilled()) {
             Trip trip = new Trip(placeTo,
@@ -110,12 +122,13 @@ public class AddTripActivity extends AppCompatActivity implements DatePickerDial
                     0,
                     Float.parseFloat(edtBudget.getText().toString()),
                     edtGeneralNotes.getText().toString(),
-                    "upcoming"
+                    ContentProviderContract.PATH_UPCOMING_TRIPS
             );
             addRes = tripDbHelper.insertTrip(trip);
             switch (addRes) {
                 case 1:
                     TripWidget.updateWidget(this);
+                    MainActivity.updateData = true;
                     Toast.makeText(this, addTripSuccessfulMessage, Toast.LENGTH_SHORT).show();
                     onBackPressed();
                     break;
@@ -203,7 +216,6 @@ public class AddTripActivity extends AppCompatActivity implements DatePickerDial
     @OnClick({R.id.et_trip_initial_date, R.id.et_trip_end_date})
     public void openDatePicker(View view) {
 
-
         final Calendar calendar = Calendar.getInstance();
         DatePickerDialog dialog = null;
         int year = calendar.get(Calendar.YEAR);
@@ -224,9 +236,19 @@ public class AddTripActivity extends AppCompatActivity implements DatePickerDial
             Toast.makeText(this, datePickerErrorMessage, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_menu, menu);
+        return true;
+    }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        //Toast.makeText(this, String.valueOf(year), Toast.LENGTH_SHORT).show();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_add_trip:
+                addTrip();
+                break;
+        }
+        return true;
     }
 }

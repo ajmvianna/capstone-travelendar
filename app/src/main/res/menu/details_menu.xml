@@ -6,7 +6,7 @@
         android:id="@+id/menu_details_end_trip"
         android:title="@string/menu_details_end_trip_title"
         android:visible="false"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_details_share_trip"

@@ -102,11 +102,10 @@ public class ContentProviderTrips extends ContentProvider {
 
         SQLiteDatabase db = tDh.getWritableDatabase();
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
-        String idStr = uri.getLastPathSegment();
-        switch (URI_MATCHER.match(uri)) {
-            case ContentProviderContract.TRIP_ITEM_CODE:
+        switch (URI_MATCHER.match(Uri.parse(uri.toString()))) {
+            case ContentProviderContract.TRIP:
                 builder.setTables(TripContract.TripContractEntry.TABLE_NAME);
-                return db.delete(TripContract.TripContractEntry.TABLE_NAME, TripContract.TripContractEntry.COLUMN_ID + "=?", new String[]{idStr});
+                return db.delete(TripContract.TripContractEntry.TABLE_NAME, TripContract.TripContractEntry.COLUMN_ID + "=?", strings);
 
             default:
                 throw new IllegalArgumentException(
@@ -158,7 +157,7 @@ public class ContentProviderTrips extends ContentProvider {
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
         URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_TRIP, ContentProviderContract.TRIP);
-        URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_TRIP.concat("/#"), ContentProviderContract.TRIP_ITEM_CODE);
+        URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, (ContentProviderContract.PATH_TRIP + "/#"), ContentProviderContract.TRIP_ITEM_CODE);
         URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_ALL_TRIPS, ContentProviderContract.ALL_TRIPS_CODE);
         URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_CONCLUDED_TRIPS, ContentProviderContract.CONCLUDED_TRIPS);
         URI_MATCHER.addURI(ContentProviderContract.CONTENT_AUTHORITY, ContentProviderContract.PATH_UPCOMING_TRIPS, ContentProviderContract.UPCOMING_TRIPS);
