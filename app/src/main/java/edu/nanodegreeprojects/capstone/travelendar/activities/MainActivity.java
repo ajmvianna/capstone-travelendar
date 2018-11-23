@@ -92,14 +92,14 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
 
         setSupportActionBar(mainToolbar);
 
-        //if (updateData)
-        //fetchTrips();
-
         loadMainTabs();
         loadContentTabs(0);
         TripWidget.updateWidget(this);
     }
 
+    /**
+     * Method responsible for load the content from main tabs
+     */
     private void loadMainTabs() {
 
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.title_tab_one_upcoming_trip)));
@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 CURRENT_TAB_POSITION = tab.getPosition();
-                //if (updateData)
                 fetchTrips();
                 viewPager.setCurrentItem(CURRENT_TAB_POSITION);
             }
@@ -131,10 +130,16 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
 
     }
 
+    /**
+     * Method responsible for start loader to get the trips
+     */
     public void fetchTrips() {
         getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, this);
     }
 
+    /**
+     * Method responsible for load a content from a specific tab
+     */
     private void loadContentTabs(int tab) {
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
@@ -264,6 +269,9 @@ public class MainActivity extends AppCompatActivity implements TabOneUpComingTri
     public void onLoaderReset(@NonNull Loader<List<Trip>> loader) {
     }
 
+    /**
+     * Method responsible show the progress bar while data is loading
+     */
     private void showProgressBar(boolean visibility) {
         switch (CURRENT_TAB_POSITION) {
             case 0:

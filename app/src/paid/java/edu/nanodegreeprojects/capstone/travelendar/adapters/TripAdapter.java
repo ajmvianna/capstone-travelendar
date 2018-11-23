@@ -1,24 +1,19 @@
 package edu.nanodegreeprojects.capstone.travelendar.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.v4.app.ShareCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.nanodegreeprojects.capstone.travelendar.R;
-import edu.nanodegreeprojects.capstone.travelendar.activities.MainActivity;
 import edu.nanodegreeprojects.capstone.travelendar.data.ContentProviderContract;
 import edu.nanodegreeprojects.capstone.travelendar.model.Trip;
 
@@ -33,6 +28,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripAdapterVie
     public interface TripAdapterOnClickHandler {
         void onClick(Trip trip);
     }
+
     public interface TripAdapterOnLongClickHandler {
         void onClick(Trip trip);
     }
@@ -122,9 +118,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripAdapterVie
             tripAdapterViewHolder.llRateStars.setVisibility(View.GONE);
         }
 
-
-        //String movieThumbnail = movieList.get(position).getThumbnailPath();
-        //Picasso.with(context).load(NetworkUtils.buildUrl(NetworkUtils.THUMBNAIL_QUERY_TYPE, movieThumbnail, null, null).toString()).into(movieAdapterViewHolder.ivMovieThumbnail);
     }
 
     @Override
@@ -141,7 +134,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripAdapterVie
         }
         notifyDataSetChanged();
     }
-
 
 
 }

@@ -135,6 +135,9 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
         loadData(trip);
     }
 
+    /**
+     * Method responsible to rate a trip
+     */
     @Optional
     @OnClick({R.id.iv_rate_star_1, R.id.iv_rate_star_2, R.id.iv_rate_star_3, R.id.iv_rate_star_4, R.id.iv_rate_star_5})
     public void rateClick(View view) {
@@ -191,6 +194,9 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
         }
     }
 
+    /**
+     * Method responsible for load the information on screen regarding current trip
+     */
     private void loadData(Trip trip) {
 
         edtToWhere.setText(trip.getToWhere().getPlaceName());
@@ -209,6 +215,9 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
 
     }
 
+    /**
+     * Load the Maps information regarding the trip selected
+     */
     private void loadMapDetails() {
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_detail);
@@ -270,6 +279,9 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
         return true;
     }
 
+    /**
+     * Convert current trip to string to be shared
+     */
     public String tripToString() {
         return "*" + appName + ":* \n\n" +
                 shareTripMessage + "\n\n" +
@@ -283,6 +295,9 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
 
     }
 
+    /**
+     * Method used to show the evaluation screen and end a trip
+     */
     public void endTrip() {
         View view = getLayoutInflater().inflate(R.layout.rate_trip_message, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -292,6 +307,9 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
         ButterKnife.bind(this);
     }
 
+    /**
+     * Method responsible for share the current trip
+     */
     public void shareTrip() {
         startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(this)
                 .setType("text/plain")
@@ -299,6 +317,9 @@ public class DetailTripActivity extends AppCompatActivity implements com.google.
                 .getIntent(), shareTripTitle));
     }
 
+    /**
+     * Method responsible for delete the current trip
+     */
     public void deleteTrip() {
         int res = tripDbHelper.deleteTrip(trip);
         if (res == 1) {

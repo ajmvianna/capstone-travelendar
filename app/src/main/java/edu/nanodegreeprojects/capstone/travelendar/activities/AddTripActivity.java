@@ -88,6 +88,9 @@ public class AddTripActivity extends AppCompatActivity implements DatePickerDial
 
     }
 
+    /**
+     * Load listeners from datepicker
+     */
     private void loadDatePickerListeners() {
         datePickerInitialDate = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -112,6 +115,9 @@ public class AddTripActivity extends AppCompatActivity implements DatePickerDial
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
     }
 
+    /**
+     * Add a new trip on the database
+     */
     public void addTrip() {
         int addRes;
         if (areFieldsFilled()) {
@@ -146,6 +152,9 @@ public class AddTripActivity extends AppCompatActivity implements DatePickerDial
         }
     }
 
+    /**
+     * Ensure that all fields are filled correctly
+     */
     private boolean areFieldsFilled() {
         return (!edtToWhere.getText().toString().equals("") &&
                 !edtFromWhere.getText().toString().equals("") &&
@@ -157,6 +166,9 @@ public class AddTripActivity extends AppCompatActivity implements DatePickerDial
                 placeFrom != null);
     }
 
+    /**
+     * Open the Maps API to provide to the user an interface to get information regarding a place
+     */
     @OnClick({R.id.et_trip_to_where, R.id.et_trip_from_where})
     public void getLocalScreen(View view) {
         int requestId = -1;
@@ -181,6 +193,7 @@ public class AddTripActivity extends AppCompatActivity implements DatePickerDial
             e.printStackTrace();
         }
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

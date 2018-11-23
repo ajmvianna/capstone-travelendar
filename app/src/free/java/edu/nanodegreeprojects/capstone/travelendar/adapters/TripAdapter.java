@@ -125,8 +125,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripAdapterVie
         }
 
         loadAds(tripAdapterViewHolder.itemView);
-        //String movieThumbnail = movieList.get(position).getThumbnailPath();
-        //Picasso.with(context).load(NetworkUtils.buildUrl(NetworkUtils.THUMBNAIL_QUERY_TYPE, movieThumbnail, null, null).toString()).into(movieAdapterViewHolder.ivMovieThumbnail);
+
     }
 
     @Override
@@ -147,9 +146,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripAdapterVie
     public void loadAds(View view)
     {
         AdView mAdView = view.findViewById(R.id.adView);
-        // Create an ad request. Check logcat output for the hashed device ID to
-        // get test ads on a physical device. e.g.
-        // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
